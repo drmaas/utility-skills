@@ -31,9 +31,13 @@ FILENAME=$(basename "$IMAGE_PATH")
 # --- Tesseract OCR ---------------------------------------------------------
 OCR_TEXT=""
 if command -v tesseract >/dev/null 2>&1; then
-  OCR_TEXT=$(tesseract "$IMAGE_PATH" - 2>/dev/null)
-  if [[ -z "$(echo "$OCR_TEXT" | tr -d '[:space:]')" ]]; then
-    OCR_TEXT="(no text detected)"
+  if ! tesseract --list-langs 2>/dev/null | grep -qi "^eng$"; then
+    OCR_TEXT="(tesseract missing eng language data — skipped)"
+  else
+    OCR_TEXT=$(tesseract "$IMAGE_PATH" - 2>/dev/null)
+    if [[ -z "$(echo "$OCR_TEXT" | tr -d '[:space:]')" ]]; then
+      OCR_TEXT="(no text detected)"
+    fi
   fi
 else
   OCR_TEXT="(tesseract not installed — skipped)"
@@ -42,15 +46,33 @@ fi
 # --- Moondream caption + description ---------------------------------------
 CAPTION=""
 DESCRIPTION=""
+MOONDREAM_SKIP=""
+
 if command -v moondream >/dev/null 2>&1; then
-  CAPTION=$(moondream caption "$IMAGE_PATH" 2>/dev/null)
-  DESCRIPTION=$(moondream query "$IMAGE_PATH" "Describe this image in detail, including layout, objects, people, colors, and any notable visual context." 2>/dev/null)
+  MOONDREAM_MODE="cli"
+elif command -v moondream-station >/dev/null 2>&1; then
+  MOONDREAM_MODE="station"
+else
+  MOONDREAM_SKIP="(moondream not found — no CLI, no station, no Python package — skipped)"
+fi
+
+if [[ -z "$MOONDREAM_SKIP" ]]; then
+  case "$MOONDREAM_MODE" in
+    cli)
+      CAPTION=$(moondream caption "$IMAGE_PATH" 2>/dev/null)
+      DESCRIPTION=$(moondream query "$IMAGE_PATH" "Describe this image in detail, including layout, objects, people, colors, and any notable visual context." 2>/dev/null)
+      ;;
+    station)
+      CAPTION=$(moondream-station infer caption "$IMAGE_PATH" 2>/dev/null)
+      DESCRIPTION=$(moondream-station infer query "$IMAGE_PATH" "Describe this image in detail, including layout, objects, people, colors, and any notable visual context." 2>/dev/null)
+      ;;
+  esac
 
   [[ -z "$CAPTION" ]] && CAPTION="(no caption returned)"
   [[ -z "$DESCRIPTION" ]] && DESCRIPTION="(no description returned)"
 else
-  CAPTION="(moondream not installed — skipped)"
-  DESCRIPTION="(moondream not installed — skipped)"
+  CAPTION="$MOONDREAM_SKIP"
+  DESCRIPTION="$MOONDREAM_SKIP"
 fi
 
 # --- Assemble combined Markdown output --------------------------------------

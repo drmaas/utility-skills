@@ -27,19 +27,83 @@ and Moondream isn't tuned for dense document text.
 
 ## Prerequisites
 
-Check both tools are installed before running:
+Run this comprehensive check to verify both tools are installed and
+functional before proceeding:
 
 ```bash
-command -v tesseract && command -v moondream
+STATUS=0
+
+echo "=== Tesseract ==="
+if command -v tesseract >/dev/null 2>&1; then
+  VER=$(tesseract --version 2>&1 | head -1)
+  echo "  binary: found ($VER)"
+  if tesseract --list-langs 2>/dev/null | grep -qi "^eng$"; then
+    echo "  lang data: OK (eng available)"
+  else
+    echo "  lang data: MISSING (run: sudo apt-get install -y tesseract-ocr-eng)"
+    STATUS=1
+  fi
+else
+  echo "  binary: NOT FOUND"
+  echo "  install: sudo apt-get install -y tesseract-ocr"
+  STATUS=1
+fi
+
+echo "=== Moondream ==="
+MD_FOUND=0
+if command -v moondream >/dev/null 2>&1; then
+  if moondream --help >/dev/null 2>&1; then
+    echo "  moondream CLI: FOUND and responds"
+    MD_FOUND=1
+  else
+    echo "  moondream CLI: FOUND but broken (try: pip install --upgrade moondream)"
+  fi
+fi
+if command -v moondream-station >/dev/null 2>&1; then
+  echo "  moondream-station CLI: FOUND"
+  MD_FOUND=1
+fi
+if python3 -c "import moondream" 2>/dev/null; then
+  PV=$(python3 -c "import moondream; print(getattr(moondream, '__version__', 'unknown'))" 2>/dev/null)
+  echo "  moondream Python package: FOUND (version $PV)"
+  MD_FOUND=1
+else
+  echo "  moondream Python package: NOT FOUND"
+fi
+if [ "$MD_FOUND" -eq 0 ]; then
+  echo "  install one of:"
+  echo "    - pip install moondream          (Python library)"
+  echo "    - https://moondream.ai/station   (moondream-station CLI)"
+  STATUS=1
+fi
+if [ -d "$HOME/.cache/moondream" ] && ls "$HOME/.cache/moondream"/*.gguf >/dev/null 2>&1; then
+  echo "  model cache: FOUND ($(ls "$HOME/.cache/moondream"/*.gguf))"
+elif [ -d "$HOME/.cache/huggingface/hub" ] && find "$HOME/.cache/huggingface/hub" -maxdepth 2 -name "*moondream*" -type d 2>/dev/null | grep -q .; then
+  MDIR=$(find "$HOME/.cache/huggingface/hub" -maxdepth 2 -name "*moondream*" -type d 2>/dev/null | head -1)
+  echo "  model cache: FOUND (HuggingFace: $MDIR)"
+elif python3 -c "import moondream; print(type(moondream.vl))" 2>/dev/null | grep -qi "model\|module\|class"; then
+  echo "  model: LOADABLE via Python (will init on first use)"
+else
+  echo "  model cache: NOT FOUND (will auto-download on first use)"
+fi
+
+echo ""
+if [ "$STATUS" -eq 0 ]; then
+  echo "All prerequisites satisfied."
+else
+  echo "One or more prerequisites are missing. See above."
+fi
 ```
 
-If either is missing:
+If tesseract is missing:
 
 ```bash
-# Tesseract (Debian/Ubuntu)
-sudo apt-get install -y tesseract-ocr
+sudo apt-get install -y tesseract-ocr tesseract-ocr-eng
+```
 
-# Moondream CLI
+If moondream is missing:
+
+```bash
 pip install moondream --break-system-packages
 ```
 
