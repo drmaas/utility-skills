@@ -1,4 +1,4 @@
-# drmaas/skills — Agent Guide
+# drmaas/utility-skills — Agent Guide
 
 ## Overview
 
@@ -47,4 +47,4 @@ List CLI/package dependencies in the `compatibility` frontmatter field. Include 
 
 ## Publishing
 
-Skills are installed via `npx skills add drmaas/skills`. The repo is consumed directly from GitHub — no build step needed.
+Skills are installed via `npx skills add drmaas/utility-skills`. The repo is consumed directly from GitHub — no build step needed.

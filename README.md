@@ -1,4 +1,4 @@
-# drmaas/skills
+# drmaas/utility-skills
 
 A collection of agent skills for AI coding agents. Skills follow the [Agent Skills](https://agentskills.io/) format.
 
@@ -6,16 +6,16 @@ A collection of agent skills for AI coding agents. Skills follow the [Agent Skil
 
 ```bash
 # Install all skills in this repository
-npx skills add drmaas/skills
+npx skills add drmaas/utility-skills
 
 # Install a specific skill
-npx skills add drmaas/skills --skill image-preprocess
+npx skills add drmaas/utility-skills --skill image-preprocess
 
 # Install to a specific agent (e.g. opencode, claude-code)
-npx skills add drmaas/skills --agent opencode
+npx skills add drmaas/utility-skills --agent opencode
 
 # List available skills without installing
-npx skills add drmaas/skills --list
+npx skills add drmaas/utility-skills --list
 ```
 
 After installation, your agent will automatically load the relevant skill when it detects a matching task.

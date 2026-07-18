@@ -3,7 +3,7 @@ name: image-preprocess
 description: Extracts both literal text and semantic/visual meaning from images using the Tesseract OCR CLI and the Moondream CLI, then combines the results into a single Markdown block that a text-only LLM can consume. Use this skill whenever the user has an image but is working with a text-only model (no vision support), wants to "describe" an image, needs text pulled out of a screenshot/scan/photo, or asks to pre-process, caption, or OCR an image or folder of images before feeding it to an LLM. Trigger this even if the user only mentions OCR, captioning, or "reading" an image — not just when they say "preprocess."
 compatibility: Requires the `tesseract` CLI (tesseract-ocr) and the `moondream` CLI (pip install moondream) to be installed and on PATH.
 metadata:
-  repository: https://github.com/drmaas/skills
+  repository: https://github.com/drmaas/utility-skills
 ---
 
 # Image Preprocess (Tesseract + Moondream)
