@@ -39,52 +39,13 @@ Further reading: [HumanLayer ace-fca](https://github.com/humanlayer/advanced-con
 
 ### image-preprocess
 
-Preprocess images into a structured Markdown description so text-only LLMs can understand them. Most coding models — like **DeepSeek V4 Flash** — cannot see images. This skill bridges that gap.
-
-#### How it works
-
-It runs two tools and merges their output:
-
-| Tool | What it does | Strengths |
-|------|-------------|-----------|
-| **Tesseract OCR** | Extracts literal, pixel-level text from images | Documents, screenshots, scanned forms, signs — any image with readable characters |
-| **Moondream** | Generates a semantic caption and detailed visual description | Scene understanding, objects, people, layout, colors, overall "what's happening" in the image |
-
-Tesseract has zero scene understanding — it doesn't know a cat from a car. Moondream understands the scene but isn't tuned for dense document text. Running both and merging their output gives you the full picture.
-
-#### Prerequisites
-
-Both CLIs must be installed on the machine running the agent:
+Preprocess images into structured Markdown so text-only LLMs can understand them (Tesseract OCR + Moondream caption/detail). Most coding models cannot see images; this skill bridges that gap.
 
 ```bash
-# Tesseract OCR (Debian/Ubuntu)
-sudo apt-get install -y tesseract-ocr
-
-# Tesseract OCR (macOS)
-brew install tesseract
-
-# Moondream CLI (any OS with Python)
-pip install moondream --break-system-packages
+npx skills add drmaas/utility-skills --skill image-preprocess
 ```
 
-Verify both are available:
-
-```bash
-command -v tesseract && command -v moondream
-```
-
-#### Usage
-
-```bash
-# Single image → stdout
-scripts/preprocess_image.sh /path/to/image.jpg
-
-# Single image → file
-scripts/preprocess_image.sh /path/to/image.jpg /path/to/output.md
-
-# Batch process a folder of images
-scripts/preprocess_batch.sh /path/to/images/ combined.md
-```
+See [`skills/image-preprocess/README.md`](skills/image-preprocess/README.md).
 
 ---
 
@@ -106,6 +67,7 @@ skills/
     README.md
   image-preprocess/
     SKILL.md
+    README.md
     scripts/
       preprocess_image.sh
       preprocess_batch.sh
