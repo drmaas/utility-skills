@@ -35,6 +35,8 @@ npx skills add drmaas/utility-skills --skill rpi
 
 Trigger phrases: "RPI", "research-plan-implement", gated research → plan → implement loop.
 
+Further reading: [HumanLayer ace-fca](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md), [Tyler Burleigh (2026-02-22)](https://tylerburleigh.com/blog/2026/02/22/). See also [`skills/rpi/README.md`](skills/rpi/README.md).
+
 ### image-preprocess
 
 Preprocess images into a structured Markdown description so text-only LLMs can understand them. Most coding models — like **DeepSeek V4 Flash** — cannot see images. This skill bridges that gap.
@@ -101,6 +103,7 @@ skills/
     agents/
     phases/
     templates/
+    README.md
   image-preprocess/
     SKILL.md
     scripts/

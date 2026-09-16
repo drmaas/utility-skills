@@ -123,6 +123,9 @@ On **cursor**, walk primary → alt → **cross-pool** when a usage pool is maxe
 - **`doit`** — lighter: no formal spec, no human approval gate. Use when well-scoped and bounded.
 - **rpi** (this skill) — middle ground: PRD + markdown artifacts under `docs/decisions/<feature>/`, review cycles, contracts/ADRs as needed, freeze into the feature PR.
 
-## Source
+## Source / further reading
 
-Adapted from Tyler Burleigh's *Research, Plan, Implement, Review: My Agentic Engineering Workflow* (2026-02-22). Modified for checklist naming, agent-before-human gates, opt-in refactor, shared `docs/decisions/<feature>/` active tree, PRD + fit check, specialized reviewer agents, `docs/contracts.md` + ADRs, and freeze-into-PR (no dangling drafts).
+- [Advanced Context Engineering for Coding Agents (HumanLayer / ace-fca)](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md)
+- [Research, Plan, Implement, Review: My Agentic Engineering Workflow (Tyler Burleigh, 2026-02-22)](https://tylerburleigh.com/blog/2026/02/22/)
+
+Adapted from Burleigh’s workflow and HumanLayer’s RPI / context-engineering guidance. Modified for checklist naming, agent-before-human gates, opt-in refactor, shared `docs/decisions/<feature>/` active tree, PRD + fit check, specialized reviewer agents, `docs/contracts.md` + ADRs, agent-agnostic worktrees, and freeze-into-PR (no dangling drafts).
