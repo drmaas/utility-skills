@@ -8,7 +8,7 @@ Goal: produce `docs/decisions/<feature>/research.md` from the approved PRD and c
 - Contracts preference recorded.
 - `<feature>` slug derived (never asked).
 - Provider tier and base branch captured.
-- Worktree created; shell operates in it.
+- Shell is in a feature worktree (not the main checkout).
 - Optional pointers from the user (paths, docs, examples).
 
 ## Subagent prompt

@@ -4,7 +4,7 @@ Goal: decide whether RPI is the right workflow for this request. Run in the main
 
 ## When to run
 
-Always first when the user invokes RPI or the skill otherwise activates. Do not create a worktree, PRD, or artifacts until fit is confirmed.
+Always first when the user invokes RPI or the skill otherwise activates. Do not enter a worktree, write a PRD, or create artifacts until fit is confirmed.
 
 ## Fit criteria
 

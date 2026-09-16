@@ -6,7 +6,7 @@ Goal: obtain an approved `docs/decisions/<feature>/prd.md` before research.
 
 - Fit check passed (`phases/00-fit.md`).
 - Problem statement known (from user or PRD path below). Derive `<feature>` slug from problem/PRD; never ask for the slug.
-- Provider tier and base branch may be asked here or immediately after PRD approval; capture before worktree create.
+- Provider tier and base branch may be asked here or immediately after PRD approval; capture before entering a worktree.
 
 ## Ask first
 
@@ -29,7 +29,7 @@ Sections (brief, simple language):
 - Metrics (value, owner, date, source — or omit if none sourced)
 - Open questions (each owned, or `none`)
 
-Create `docs/decisions/<feature>/` if missing. Worktree may already exist; if not, create after this gate per `worktree.md`.
+Create `docs/decisions/<feature>/` if missing. Enter a feature worktree after this gate per `worktree.md` if not already in one.
 
 ## Product-requirements critic
 
@@ -68,4 +68,4 @@ Record the choice in conversation state. Plan and plan-review read it.
 
 - User Approved the PRD.
 - Contracts preference recorded.
-- Move to worktree setup (if needed), then `phases/01-research.md`.
+- Enter a worktree if needed (`worktree.md`), then `phases/01-research.md`.

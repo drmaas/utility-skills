@@ -18,7 +18,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 
 1. Fit check (`phases/00-fit.md`). If unfit: recommend `sdd` / `doit` / plain implement, offer to continue under that path, leave RPI.
 2. PRD (`phases/01-prd.md`): ask existing vs create → `docs/decisions/<feature>/prd.md` → product-requirements critic → human gate → ask contracts + tooling preference.
-3. Derive feature slug from PRD/problem; capture base branch and provider tier; create worktree (`worktree.md`).
+3. Derive feature slug from PRD/problem; capture base branch and provider tier; enter a feature worktree (`worktree.md`).
 4. Research → `docs/decisions/<feature>/research.md`.
 5. Research review (agent + human gate).
 6. Planning → `plan.md`, `checklist.md`; if contracts in scope, update `docs/contracts.md`.
@@ -63,7 +63,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 ## Operating rules
 
 - Always run the fit check first. Do not start RPI artifacts if unfit.
-- Work in a dedicated feature worktree (see `worktree.md`), never the main checkout.
+- Enter a dedicated feature worktree before edits (see `worktree.md`); never edit in the main checkout. Worktree paths differ by coding agent — do not hardcode a vendor directory.
 - Before editing with multiple worktrees, verify `git rev-parse --show-toplevel`, the current branch, `git worktree list`, and repository status; use the confirmed root for absolute paths.
 - Every phase runs in a fresh-context subagent (no carry-over from prior phases). The user-visible summary is composed in the main thread, not the subagent.
 - Load the matching brief from `agents/` when spawning critic/review roles (see [`agents/README.md`](agents/README.md)).
@@ -111,7 +111,7 @@ On **cursor**, walk primary → alt → **cross-pool** when a usage pool is maxe
 
 1. Run `phases/00-fit.md`. On unfit: recommend and offer handoff; stop RPI if user declines or after handoff.
 2. Run `phases/01-prd.md` (PRD ask → write/review → critic → gate → contracts ask). Derive `<feature>`; `question` for base branch and provider tier if not yet recorded.
-3. Run `worktree.md`. Refuse to proceed in the main checkout.
+3. Run `worktree.md` and enter a feature worktree. Refuse to proceed in the main checkout.
 4. Read `artifacts.md`, then `phases/01-research.md`.
 5. After every agent review, follow `human-gates.md`.
 6. At commit steps, follow `phases/08-commit.md`: never commit without asking.
