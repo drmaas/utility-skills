@@ -10,6 +10,7 @@ npx skills add drmaas/utility-skills
 
 # Install a specific skill
 npx skills add drmaas/utility-skills --skill image-preprocess
+npx skills add drmaas/utility-skills --skill rpi
 
 # Install to a specific agent (e.g. opencode, claude-code)
 npx skills add drmaas/utility-skills --agent opencode
@@ -23,6 +24,16 @@ After installation, your agent will automatically load the relevant skill when i
 ---
 
 ## Skills
+
+### rpi
+
+Fit check → PRD → Research → Plan → Implement with specialized reviewer agents, optional `docs/contracts.md` + ADRs, mandatory human gates, and a final freeze that commits durable docs into the feature PR. Fresh-context subagents per phase; drafts under `docs/decisions/<feature>/`; TDD by default; verify before each implementation review.
+
+```bash
+npx skills add drmaas/utility-skills --skill rpi
+```
+
+Trigger phrases: "RPI", "research-plan-implement", gated research → plan → implement loop.
 
 ### image-preprocess
 
@@ -79,6 +90,17 @@ scripts/preprocess_batch.sh /path/to/images/ combined.md
 
 ```
 skills/
+  rpi/
+    SKILL.md
+    models.md
+    worktree.md
+    artifacts.md
+    human-gates.md
+    contracts.md
+    adrs.md
+    agents/
+    phases/
+    templates/
   image-preprocess/
     SKILL.md
     scripts/

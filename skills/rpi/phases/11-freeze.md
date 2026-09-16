@@ -1,0 +1,57 @@
+# Phase 11 — Freeze into PR
+
+Goal: freeze all durable docs onto final paths, remove draft trees, and commit them on the feature branch for the feature PR. Leave no dangling docs for a later commit.
+
+## Entry conditions
+
+- Final review Approved (`phases/09-final-review.md`).
+- Optional refactor finished or user opted out (`phases/10-refactor.md`).
+
+## Freeze moves
+
+From `docs/decisions/<feature>/` (skip missing files):
+
+| Draft | Final path |
+| --- | --- |
+| `prd.md` | `docs/plans/<feature>-prd.md` |
+| `research.md` | `docs/research/<feature>.md` |
+| `plan.md` | `docs/plans/<feature>.md` |
+| `refactor.md` | `docs/plans/<feature>-refactor.md` |
+| `workflow.md` | `docs/workflows/<feature>-workflow.md` |
+
+Also ensure on the branch in final form:
+
+- `docs/contracts.md` (if contracts were in scope)
+- any new/updated `docs/adrs/*`
+
+Then:
+
+1. Delete `docs/decisions/<feature>/checklist.md`.
+2. Remove `docs/decisions/<feature>/` when empty.
+3. Do not leave drafts under `docs/decisions/<feature>/`.
+
+## Commit + PR gate
+
+Print a short freeze summary (paths moved, contracts/ADRs touched, checklist removed).
+
+Call `question`:
+
+- **Commit freeze as suggested** — stage freeze paths + contracts/ADRs; run user-authorized commit with suggested message.
+- **Commit with my message** — user supplies exact command; run it.
+- **Open / update PR** — after commit (or if already committed), open or update the feature PR so frozen docs are in that PR. Ask before `gh pr create` / push.
+- **Abort** — stop; warn that draft freeze is incomplete if moves already happened.
+
+Rules:
+
+- Never auto-commit, push, or open a PR without explicit choice.
+- Workflow must not claim done while `docs/decisions/<feature>/` still holds unfrozen durable drafts.
+- Mid-feature phase commits may already exist; this step only finishes docs into the same PR.
+
+## Exit conditions
+
+- Durable docs on final paths.
+- Checklist and decisions folder gone.
+- Freeze committed (or user explicitly aborted).
+- PR includes frozen docs when user authorized open/update.
+
+Workflow ends.

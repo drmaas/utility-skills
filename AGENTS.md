@@ -25,7 +25,10 @@ Every skill in `skills/<name>/SKILL.md` follows the Agent Skills spec:
 - **Body**: Markdown with prerequisites, usage, workflow, edge cases
 - **Trigger**: The `description` field in frontmatter is the primary trigger — it should be a detailed paragraph that tells the agent exactly when to activate
 
-Current skills: `image-preprocess` (preprocesses images via Tesseract OCR + Moondream for text-only LLMs).
+Current skills:
+
+- `rpi` — research-plan-implement with fit check, PRD, specialized reviewers, contracts/ADRs, freeze-into-PR; self-contained under `skills/rpi/` (includes bundled `models.md` and `agents/`).
+- `image-preprocess` — preprocesses images via Tesseract OCR + Moondream for text-only LLMs.
 
 ## Adding a New Skill
 
