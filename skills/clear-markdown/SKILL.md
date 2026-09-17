@@ -10,7 +10,9 @@ description: >-
   instruction clarity, or Cloudflare-style accessible docs writing. Do not use
   for code, config, or chat-compression modes that intentionally trade prose
   clarity for brevity.
-compatibility: No special tooling required. Optional: Hemingway Editor or similar for sentence length / reading-level checks.
+compatibility: >-
+  No special tooling required. Optional Hemingway Editor or similar for
+  sentence length / reading-level checks.
 metadata:
   repository: https://github.com/drmaas/utility-skills
 ---
