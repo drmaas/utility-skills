@@ -1,6 +1,6 @@
 # Human review gates
 
-After every agent review phase, pause and surface (1) a **phase content summary** and (2) the agent's review findings. The user decides only after the agent has self-revised.
+After every agent review phase, pause and surface (1) a **plain-language change explanation**, (2) a **phase content summary**, (3) the agent's review findings, and (4) any **open questions with recommendations**. The user decides only after the agent has self-revised.
 
 ## Where the gates fire
 
@@ -12,7 +12,7 @@ After every agent review phase, pause and surface (1) a **phase content summary*
 - After refactor candidate write-up when opted in (`phases/10-refactor.md`).
 - Freeze + PR (`phases/11-freeze.md`) — different question set (commit / PR), still a mandatory stop.
 
-Commit mid-feature (`phases/08-commit.md`) is also a gate with its own options.
+Commit mid-feature (`phases/08-commit.md`) is also a gate with its own options. Commit and freeze gates still include the plain-language change explanation and open-questions block.
 
 ## Gate behavior
 
@@ -20,6 +20,10 @@ Commit mid-feature (`phases/08-commit.md`) is also a gate with its own options.
 
    ```
    === Human gate: <phase name> ===
+
+   ## What this changes (plain language)
+   <short non-jargon explanation of what is proposed or already done to the application —
+    who is affected, what behaves differently, what stays the same>
 
    ## Phase summary
    <gate-specific content summary — see below; composed in the main thread from artifacts / git, not invented>
@@ -30,10 +34,26 @@ Commit mid-feature (`phases/08-commit.md`) is also a gate with its own options.
    Self-revisions applied: <list of changes the agent already made>
    Implementation strategy: <TDD or Code first — only on the plan-review gate>
 
+   ## Open questions
+   <none | numbered list — see below>
+
    === end gate ===
    ```
 
-2. **Phase summary** is mandatory and gate-specific. Short digest (about half to one screen). Do not paste the full artifact unless asked. Brief language.
+2. **What this changes (plain language)** is mandatory at every gate (including commit and freeze). Write for a non-specialist: say what the app will do differently, for whom, and any notable risk or side effect. Avoid file lists, API jargon, and artifact dumps here — those belong in Phase summary or Diff on demand.
+
+3. **Phase summary** is mandatory and gate-specific. Short digest (about half to one screen). Do not paste the full artifact unless asked. Brief language.
+
+4. **Open questions** are mandatory whenever the agent was unclear, hit ambiguity, or made a provisional assumption. Never bury ambiguity or guess past it. For each item use:
+
+   ```
+   Q<n>: <decision the user must make>
+   Why it matters: <one sentence>
+   Recommendation: <preferred option + one-line reason>
+   Alternatives: <other viable options, brief>
+   ```
+
+   If there are no open questions, write `Open questions: none`. Do not proceed on silent assumptions about behavior, scope, compatibility, security, or UX.
 
 ### PRD gate
 
@@ -101,16 +121,18 @@ Compose from `refactor.md`:
 - In-scope vs stretch.
 - Artifact path.
 
-3. By default, do not dump the full artifact or full diff. Detail on demand: [Diff on demand](#diff-on-demand).
+5. By default, do not dump the full artifact or full diff. Detail on demand: [Diff on demand](#diff-on-demand).
 
-4. Call `question` with options:
+6. Call `question` with options:
 
-   - **Approved** — proceed.
+   - **Approved** — proceed (only when open questions are resolved or explicitly deferred by the user).
    - **Revise** — user notes; return to the same review subagent.
    - **Ignore points** — user lists findings to disregard; return with notes + ignore list.
    - **Abort** — stop; record reason in conversation state.
 
-5. Record the reply in conversation state. Optional log: `docs/decisions/<feature>/workflow.md` only if the user wants one (frozen later).
+   When open questions exist, prefer presenting them in the same `question` turn (or immediately before) so the user can pick recommendations or override them before choosing Approved.
+
+7. Record the reply in conversation state. Optional log: `docs/decisions/<feature>/workflow.md` only if the user wants one (frozen later).
 
 ## Diff on demand
 

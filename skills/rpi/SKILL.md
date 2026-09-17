@@ -68,7 +68,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 - Every phase runs in a fresh-context subagent (no carry-over from prior phases). The user-visible summary is composed in the main thread, not the subagent.
 - Load the matching brief from `agents/` when spawning critic/review roles (see [`agents/README.md`](agents/README.md)).
 - Agent review always happens before the human review gate. The agent must self-revise first; the human only reads when obvious problems are already addressed.
-- Human gates are mandatory after PRD, research review, plan review, per-phase implementation review, and final review. See `human-gates.md`.
+- Human gates are mandatory after PRD, research review, plan review, per-phase implementation review, and final review. See `human-gates.md`. Every gate (including commit and freeze) must include a plain-language explanation of what is changing in the application, and must surface any ambiguity as open questions with a recommended answer — never silent assumptions.
 - The skill never commits, pushes, opens a PR, or deletes files without explicit per-action user authorization — but freeze must complete (or user Abort) before the workflow claims done.
 - Active drafts: `docs/decisions/<feature>/[prd|research|plan|checklist|refactor].md`. On freeze: `prd` → `docs/plans/<feature>-prd.md`, `research` → `docs/research/<feature>.md`, `plan` → `docs/plans/<feature>.md`, `refactor` → `docs/plans/<feature>-refactor.md`, optional `workflow` → `docs/workflows/<feature>-workflow.md`; delete `checklist.md`; remove the decisions folder. `docs/contracts.md` and `docs/adrs/*` stay on those paths and ship in the same PR.
 - `checklist.md` is the implementation tracker; the implementer updates it as work progresses.

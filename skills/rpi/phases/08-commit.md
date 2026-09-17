@@ -4,15 +4,23 @@ Goal: ask the user to commit the phase. Never auto-commit.
 
 ## Behavior
 
-1. The skill prints:
+1. The skill prints (also follow `human-gates.md` for plain-language + open questions):
 
    ```
    === Commit gate: Phase <N> ===
+
+   ## What this changes (plain language)
+   <non-jargon explanation of what this phase did to the application>
+
    Files changed: <list>
    Validation: <last validation output summary>
    Suggested commit message:
    <conventional-commit subject>
    <body explaining why>
+
+   ## Open questions
+   <none | Qn / Why / Recommendation / Alternatives>
+
    === end gate ===
    ```
 

@@ -19,6 +19,7 @@ Do not silently skip stages. If a stage is not applicable, record why in the wor
 - Before editing with multiple worktrees, verify `git rev-parse --show-toplevel`, the current branch, `git worktree list`, and repository status; use the confirmed root for absolute paths.
 - Separate discovery from commitment: brainstorming may contain alternatives; the approved specification must contain a clear decision.
 - Treat the human review gate as a real stop. Do not write the implementation plan, tests, or production code until the user approves the specification.
+- Every human gate (spec approval and release) must include a plain-language explanation of what is changing in the application, plus any open questions with a recommended answer. Never leave ambiguity as a silent assumption.
 - Write tests from approved acceptance criteria before implementation. A test may be intentionally red at first, but it must become meaningful and pass after implementation.
 - Keep the specification, architecture, plan, tests, implementation, and documentation consistent. When one changes, inspect the downstream artifacts.
 - Use the project's package manager and existing scripts. Do not install a new dependency merely to satisfy this workflow without approval.
@@ -97,7 +98,7 @@ Run an adversarial pass with a different model (role `adversarial`, different fa
 
 Skip the adversarial pass only when the change is a pure documentation or config edit with no behavior, security, persistence, migration, public-API, or compatibility surface; record the skip reason.
 
-Ask focused questions for decisions that materially affect behavior, compatibility, cost, security, or architecture. Do not turn unresolved assumptions into requirements. Carry forward useful material as synthesized decisions, not retained brainstorm files.
+Ask focused questions for decisions that materially affect behavior, compatibility, cost, security, or architecture. For each question, include a recommendation (preferred option + one-line reason) and brief alternatives. Do not turn unresolved assumptions into requirements. Carry forward useful material as synthesized decisions, not retained brainstorm files.
 
 ## Stage 2 — Architecture
 
@@ -132,14 +133,37 @@ Every acceptance criterion should be observable and specific enough to become a 
 
 ## Stage 4 — Human review gate
 
-Present the proposed architecture and specification to the user in a concise review packet. Call out:
+Present the proposed architecture and specification to the user in a concise review packet:
 
-- Decisions made and alternatives rejected.
-- Requirements and acceptance criteria.
-- User-visible changes and compatibility impact.
-- Risks, open questions, and items needing confirmation.
+```
+=== Human gate: Specification approval ===
 
-Stop and wait for explicit approval. Do not write the implementation plan or tests before approval. If the user requests changes, rerun the relevant ephemeral model pass and update the architecture or specification as appropriate, then repeat this gate. Record the approval and any conditions.
+## What this changes (plain language)
+<non-jargon explanation of how the application will behave differently,
+ who is affected, and what stays the same>
+
+## Review summary
+- Decisions made and alternatives rejected
+- Requirements and acceptance criteria (short)
+- User-visible changes and compatibility impact
+- Risks
+
+## Open questions
+<none | numbered list — see format below>
+
+=== end gate ===
+```
+
+For every point of unclarity or ambiguity, list an open question. Never bury it or guess past it. Format each item as:
+
+```
+Q<n>: <decision the user must make>
+Why it matters: <one sentence>
+Recommendation: <preferred option + one-line reason>
+Alternatives: <other viable options, brief>
+```
+
+Stop and wait for explicit approval. Resolve or explicitly defer open questions before treating the gate as approved. Do not write the implementation plan or tests before approval. If the user requests changes, rerun the relevant ephemeral model pass and update the architecture or specification as appropriate, then repeat this gate. Record the approval, resolved questions, and any conditions.
 
 ## Stage 5 — Write the implementation plan
 
@@ -224,7 +248,27 @@ Document supported platforms, limitations, security behavior, and the upgrade pa
 
 ## Stage 11 — Commit, push, PR, merge, and cleanup
 
-Before release actions, show the user the final summary, changed-file list, verification evidence, review-round result, and any known limitations. Confirm that the worktree contains only intended changes.
+Before release actions, present a release gate packet:
+
+```
+=== Human gate: Release ===
+
+## What this changes (plain language)
+<non-jargon explanation of what landed in the application>
+
+## Release summary
+- Changed-file list (paths)
+- Verification evidence
+- Review-round result
+- Known limitations
+
+## Open questions
+<none | Qn / Why / Recommendation / Alternatives>
+
+=== end gate ===
+```
+
+Confirm the worktree contains only intended changes. Surface any remaining ambiguity with recommendations before asking for release authorization.
 
 With explicit user approval for the defined release-action set (an existing authorization remains valid unless it is absent, ambiguous, or the scope changes):
 

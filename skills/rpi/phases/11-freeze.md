@@ -32,7 +32,22 @@ Then:
 
 ## Commit + PR gate
 
-Print a short freeze summary (paths moved, contracts/ADRs touched, checklist removed).
+Print a freeze gate packet (also follow `human-gates.md`):
+
+```
+=== Human gate: Freeze + PR ===
+
+## What this changes (plain language)
+<non-jargon explanation of the finished feature in the application>
+
+## Freeze summary
+- Paths moved, contracts/ADRs touched, checklist removed
+
+## Open questions
+<none | Qn / Why / Recommendation / Alternatives>
+
+=== end gate ===
+```
 
 Call `question`:
 

@@ -19,14 +19,14 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 ## Stages (summary)
 
 0. Isolated worktree  
-1. Brainstorm and scope (+ adversarial; escalate to `sdd` if fuzzy)  
+1. Brainstorm and scope (+ adversarial; escalate to `sdd` if fuzzy; blocking questions include recommendations)  
 2. Architecture note + lightweight plan  
 3. Tests first  
 4. Implementation  
 5. Verification (real commands)  
 6. Fresh-context review (≤3 rounds; hard stop → `sdd` on mis-scope)  
 7. Documentation  
-8. Commit / push / PR / merge / cleanup (user auth)
+8. Commit / push / PR / merge / cleanup (user auth; plain-language change explanation + open questions with recommendations)
 
 ## Token spend
 

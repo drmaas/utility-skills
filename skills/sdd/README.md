@@ -22,14 +22,14 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 1. Ephemeral brainstorm (+ adversarial)  
 2. Architecture  
 3. Specification (`docs/decisions/<feature>/spec.md`)  
-4. Human review gate (hard stop)  
+4. **Human review gate** (hard stop) — plain-language change explanation + open questions with recommendations  
 5. Implementation plan  
 6. Tests first  
 7. Implementation  
 8. Verification (real commands)  
 9. Fresh-context review (≤3 rounds)  
 10. Documentation  
-11. Commit / push / PR / merge / cleanup (user auth)
+11. Commit / push / PR / merge / cleanup (user auth; same plain-language + questions packet)
 
 ## Token spend
 

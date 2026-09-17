@@ -2,7 +2,7 @@
 
 Markdown-driven engineering workflow for coding agents. Separates research, planning, and implementation into fresh-context phases; writes short artifacts the human and agent share; runs an agent review before each human gate; ships durable docs in the feature PR at the end.
 
-**When to use:** mid-size feature work that needs research and a written plan before coding, with cheap human checkpoints after the agent has already self-revised.
+**When to use:** mid-size feature work that needs research and a written plan before coding, with cheap human checkpoints after the agent has already self-revised. Each gate explains the app change in plain language and surfaces ambiguity as questions with recommendations.
 
 **Not for:** tiny one-shot fixes (`doit` / plain implement) or heavy compliance / formal-spec work (`sdd`). The skill starts with a fit check and can hand off.
 

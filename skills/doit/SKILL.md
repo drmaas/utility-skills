@@ -17,7 +17,9 @@ This workflow deliberately omits:
 
 It keeps planning lightweight: a short, ordered plan with a focused architecture note (see Stage 2) is written up front rather than a heavyweight specification-and-plan package.
 
-Do not use those omissions to hide ambiguity. Ask blocking questions during brainstorming. If requirements, architecture, compatibility, security, or scope remain materially ambiguous, recommend switching to `sdd` rather than guessing.
+Do not use those omissions to hide ambiguity. Ask blocking questions during brainstorming — each with a recommendation and brief alternatives. If requirements, architecture, compatibility, security, or scope remain materially ambiguous, recommend switching to `sdd` rather than guessing.
+
+Every human stop (blocking questions, escalate-to-`sdd`, release authorization) must include a plain-language explanation of what is changing or proposed for the application. Never leave ambiguity as a silent assumption.
 
 Do not silently skip stages. If a stage is not applicable, record why. Keep a short status checklist and update it after each stage.
 
@@ -92,10 +94,22 @@ Quickly establish enough context to implement safely. Apply the Graphify rules a
   - Persist to `docs/decisions/<feature>/notes.md` when the work will span sessions **or** the Stage 2 plan is expected to have **five or more** tasks.
   - Otherwise keep them in the task/PR description.
 - Ask only questions that block a safe implementation. Do not wait for a formal approval packet.
+- When asking, present:
+
+  ```
+  ## What this changes (plain language)
+  <non-jargon restatement of the proposed app change>
+
+  ## Open questions
+  Q<n>: <decision>
+  Why it matters: <one sentence>
+  Recommendation: <preferred option + one-line reason>
+  Alternatives: <other viable options, brief>
+  ```
 
 Skip the adversarial pass only when the change is a pure documentation or config edit with no behavior, security, persistence, migration, public-API, or compatibility surface; record the skip reason.
 
-If discovery reveals a substantial new product decision, cross-cutting architecture change, migration risk, or unclear user-visible behavior, stop and suggest using `sdd` for the change.
+If discovery reveals a substantial new product decision, cross-cutting architecture change, migration risk, or unclear user-visible behavior, stop and suggest using `sdd` for the change. Include the plain-language change explanation and any open questions with recommendations in that stop.
 
 ## Stage 2 — Architecture note and lightweight plan
 
@@ -196,7 +210,27 @@ Document supported platforms, limitations, security behavior, and upgrade steps 
 
 ## Stage 8 — Commit, push, PR, merge, and cleanup
 
-Before release actions, show the user the final summary, changed-file list, verification evidence, review-round result, and known limitations. Confirm that the worktree contains only intended changes.
+Before release actions, present a release gate packet:
+
+```
+=== Human gate: Release ===
+
+## What this changes (plain language)
+<non-jargon explanation of what landed in the application>
+
+## Release summary
+- Changed-file list (paths)
+- Verification evidence
+- Review-round result
+- Known limitations
+
+## Open questions
+<none | Qn / Why / Recommendation / Alternatives>
+
+=== end gate ===
+```
+
+Confirm the worktree contains only intended changes. Surface any remaining ambiguity with recommendations before asking for release authorization.
 
 With explicit user approval for the defined release-action set (an existing authorization remains valid unless it is absent, ambiguous, or the scope changes):
 
