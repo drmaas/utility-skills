@@ -4,7 +4,7 @@ Goal: architecture-security then QA-testability review `plan.md` / `checklist.md
 
 ## Subagent prompts (sequential)
 
-Spawn two fresh Task subagents (`generalPurpose`). Model role `adversarial` via `../models.md` for both. For **cursor**, pass `model: <slug>`; else prefix `[model: <id>]`.
+Spawn two fresh Task subagents (`generalPurpose`). Select models for role `adversarial` via `../models.md` for both (fit / complexity / constraints). Pass each chosen id through the harness native model mechanism.
 
 ### 1. Architecture-security
 

@@ -4,7 +4,7 @@ Goal: adversarial-code-reviewer reviews the just-completed phase against `plan.m
 
 ## Subagent prompt
 
-Spawn a fresh subagent via the `task` tool with `subagent_type: generalPurpose` (or `general-purpose` if that is the harness name). Select the model for role `review` via `../models.md` (phase → role → active tier). For **cursor**, pass `model: <slug>` (primary → alt → cross-pool); for other tiers, prefix the prompt with `[model: <id>]`.
+Spawn a fresh subagent via the `task` tool with `subagent_type: generalPurpose` (or `general-purpose` if that is the harness name). Select the model for role `review` via `../models.md` (phase → role → fit / complexity / constraints). Pass the chosen id through the harness native model mechanism (Task `model` parameter, prompt prefix, or CLI flag).
 
 Load `agents/adversarial-code-reviewer.md` + prompt template `templates/implement-review-prompt.md`.
 

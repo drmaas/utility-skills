@@ -18,7 +18,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 
 1. Fit check (`phases/00-fit.md`). If unfit: recommend `sdd` / `doit` / plain implement, offer to continue under that path, leave RPI.
 2. PRD (`phases/01-prd.md`): ask existing vs create → `docs/decisions/<feature>/prd.md` → product-requirements critic → human gate → ask contracts + tooling preference.
-3. Derive feature slug from PRD/problem; capture base branch and provider tier; enter a feature worktree (`worktree.md`).
+3. Derive feature slug from PRD/problem; capture base branch and model-selection constraints; enter a feature worktree (`worktree.md`).
 4. Research → `docs/decisions/<feature>/research.md`.
 5. Research review (agent + human gate).
 6. Planning → `plan.md`, `checklist.md`; if contracts in scope, update `docs/contracts.md`.
@@ -74,8 +74,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 - `checklist.md` is the implementation tracker; the implementer updates it as work progresses.
 - If the user did not supply a problem statement and chose create-PRD, gather enough problem text before drafting. Do not invent the problem.
 - Derive `<feature>` slug automatically (kebab-case, lowercased, concise). Never ask for the slug. Confirm only on collision.
-- The user picks the provider tier (`cursor` | `free` | `normal` | `freebuff`; aliases `opencode-zen`/`openrouter`→`free`, `opencode-go`→`normal`) at workflow start. Resolve models via [`models.md`](models.md).
-- Prefer **cursor** when the session already runs in Cursor. Outside Cursor, prefer **free**. If no no-retention free model fits a phase, pause and ask before using a retaining model.
+- Resolve models via [`models.md`](models.md) (identical copy in `sdd` / `doit`): stage → role → fit / complexity / constraints against the harness allowlist. Never hardcode vendor or model IDs. Lock choices per role for the workflow unless the user changes constraints.
 - After every implementation phase, run the repository's canonical validation command. CI should run that same command.
 - Default implementation strategy is **TDD**. QA-testability (plan review) records it in `plan.md` under `## Implementation strategy` and may flip to Code first only when testing first is impossible (one-line reason). User may override before approving the plan-review gate.
 - After each implementation iteration and before implementation review, run verify (format → lint → typecheck → tests). Spawn implementation review only after verify is green.
@@ -86,11 +85,13 @@ All generated docs are brief, use simple language, stay to the point, and contai
 - RPI artifacts are decision records once approved, not behavior specs. Prefer code → tests → architecture docs → decision records when the host does not define priority.
 - All RPI-generated docs are brief, use simple language, stay to the point, and contain no unnecessary words.
 
-## Agent Model Tiers
+## Model selection
 
-Canonical definitions: [`models.md`](models.md).
+Canonical definitions (identical across `rpi`, `sdd`, `doit`): [`models.md`](models.md).
 
-Choose exactly one provider tier at workflow start. Prefer **cursor** in Cursor sessions, **free** otherwise. If unspecified, ask before delegating. On **cursor**, do not use Fable without explicit approval.
+Select models by role and task fit — never by hardcoded vendor or model ID. Map each phase to a role, then choose from the harness allowlist using fit / complexity / constraints. Prefer a different model family for `adversarial` / `review` than for the authoring role. Record rationale and chosen ids; never silently substitute.
+
+Use the **rpi** phase→role map in `models.md`.
 
 | Phase | Role |
 | --- | --- |
@@ -105,12 +106,12 @@ Choose exactly one provider tier at workflow start. Prefer **cursor** in Cursor 
 | Final review | `review` |
 | Refactor | `docs` |
 
-On **cursor**, walk primary → alt → **cross-pool** when a usage pool is maxed. Verify availability at start; record tier, models, fallbacks, and exhausted pools. A model report is not verification evidence.
+A model report is not verification evidence.
 
 ## Workflow at a glance
 
 1. Run `phases/00-fit.md`. On unfit: recommend and offer handoff; stop RPI if user declines or after handoff.
-2. Run `phases/01-prd.md` (PRD ask → write/review → critic → gate → contracts ask). Derive `<feature>`; `question` for base branch and provider tier if not yet recorded.
+2. Run `phases/01-prd.md` (PRD ask → write/review → critic → gate → contracts ask). Derive `<feature>`; ask for base branch and model constraints (cost, retention, allowlist) if not yet recorded.
 3. Run `worktree.md` and enter a feature worktree. Refuse to proceed in the main checkout.
 4. Read `artifacts.md`, then `phases/01-research.md`.
 5. After every agent review, follow `human-gates.md`.

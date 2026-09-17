@@ -6,7 +6,7 @@ Goal: obtain an approved `docs/decisions/<feature>/prd.md` before research.
 
 - Fit check passed (`phases/00-fit.md`).
 - Problem statement known (from user or PRD path below). Derive `<feature>` slug from problem/PRD; never ask for the slug.
-- Provider tier and base branch may be asked here or immediately after PRD approval; capture before entering a worktree.
+- Model-selection constraints and base branch may be asked here or immediately after PRD approval; capture before entering a worktree.
 
 ## Ask first
 
@@ -33,7 +33,7 @@ Create `docs/decisions/<feature>/` if missing. Enter a feature worktree after th
 
 ## Product-requirements critic
 
-Spawn Task `generalPurpose`. Model role `adversarial` via `../models.md`.
+Spawn Task `generalPurpose`. Select the model for role `adversarial` via `../models.md` (fit / complexity / constraints); pass via harness native model mechanism.
 
 Load:
 

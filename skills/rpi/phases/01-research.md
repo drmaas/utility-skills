@@ -7,7 +7,7 @@ Goal: produce `docs/decisions/<feature>/research.md` from the approved PRD and c
 - Fit check passed; PRD approved (`phases/01-prd.md`).
 - Contracts preference recorded.
 - `<feature>` slug derived (never asked).
-- Provider tier and base branch captured.
+- Model-selection constraints and base branch captured.
 - Shell is in a feature worktree (not the main checkout).
 - Optional pointers from the user (paths, docs, examples).
 
@@ -21,7 +21,7 @@ Before spawning the research subagent, check the worktree (and repo root if diff
 
 ## Subagent prompt
 
-Use the `task` tool with `subagent_type: generalPurpose` (or `general-purpose` if that is the harness name). Select the model for role `reasoning` via `../models.md` (phase → role → active tier). For **cursor**, pass `model: <slug>` (primary → alt → cross-pool); for other tiers, prefix the prompt with `[model: <id>]`.
+Use the `task` tool with `subagent_type: generalPurpose` (or `general-purpose` if that is the harness name). Select the model for role `reasoning` via `../models.md` (phase → role → fit / complexity / constraints). Pass the chosen id through the harness native model mechanism (Task `model` parameter, prompt prefix, or CLI flag).
 
 Prompt template: `templates/research-prompt.md`, parameterized with `<feature>`, `<repo-root>`, `<worktree-path>`, problem from `prd.md`, path to `prd.md`, and `<graphify-status>` (`present` | `absent`).
 

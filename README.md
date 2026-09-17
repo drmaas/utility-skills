@@ -11,9 +11,11 @@ npx skills add drmaas/utility-skills
 # Install a specific skill
 npx skills add drmaas/utility-skills --skill image-preprocess
 npx skills add drmaas/utility-skills --skill rpi
+npx skills add drmaas/utility-skills --skill sdd
+npx skills add drmaas/utility-skills --skill doit
 
-# Install to a specific agent (e.g. opencode, claude-code)
-npx skills add drmaas/utility-skills --agent opencode
+# Install to a specific agent (see `npx skills add --help` for supported hosts)
+npx skills add drmaas/utility-skills --agent <agent>
 
 # List available skills without installing
 npx skills add drmaas/utility-skills --list
@@ -36,6 +38,26 @@ npx skills add drmaas/utility-skills --skill rpi
 Trigger phrases: "RPI", "research-plan-implement", gated research → plan → implement loop.
 
 Further reading: [HumanLayer ace-fca](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md), [Tyler Burleigh (2026-02-22)](https://tylerburleigh.com/blog/2026/02/22/). See also [`skills/rpi/README.md`](skills/rpi/README.md).
+
+### sdd
+
+Spec-driven development: isolated worktree, ephemeral brainstorm, architecture, formal specification, human approval gate, implementation plan, tests-first coding, verification, fresh-context review, docs, and release. Use for non-trivial or compliance-heavy changes that need behavior locked before code.
+
+```bash
+npx skills add drmaas/utility-skills --skill sdd
+```
+
+See [`skills/sdd/README.md`](skills/sdd/README.md).
+
+### doit
+
+Fast path for well-scoped changes: worktree, ephemeral brainstorm, lightweight architecture note + plan, tests-first, verify, fresh-context review, docs, release — no formal spec and no pre-implementation human gate. Escalate to `sdd` when scope is unclear.
+
+```bash
+npx skills add drmaas/utility-skills --skill doit
+```
+
+See [`skills/doit/README.md`](skills/doit/README.md).
 
 ### image-preprocess
 
@@ -65,13 +87,20 @@ skills/
     phases/
     templates/
     README.md
+  sdd/
+    SKILL.md
+    models.md
+    README.md
+  doit/
+    SKILL.md
+    models.md
+    README.md
   image-preprocess/
     SKILL.md
     README.md
     scripts/
       preprocess_image.sh
       preprocess_batch.sh
-  ...more-skills-here/
 ```
 
 ## License

@@ -14,7 +14,7 @@ Install:
 npx skills add drmaas/utility-skills --skill rpi
 ```
 
-Full orchestrator instructions: [`SKILL.md`](SKILL.md).
+Full orchestrator instructions: [`SKILL.md`](SKILL.md). Role-based model routing (identical to `sdd` / `doit`): [`models.md`](models.md).
 
 ## High-level sequence
 

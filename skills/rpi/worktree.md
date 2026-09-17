@@ -4,7 +4,7 @@ RPI always runs in a dedicated feature worktree. Never edit in the main checkout
 
 ## Procedure
 
-Run after fit + PRD (or when the orchestrator is ready to edit), once `<feature>` slug, provider tier, and base branch are known.
+Run after fit + PRD (or when the orchestrator is ready to edit), once `<feature>` slug, model-selection constraints, and base branch are known.
 
 1. Verify the active root:
 
@@ -28,7 +28,7 @@ Run after fit + PRD (or when the orchestrator is ready to edit), once `<feature>
 ## Conventions
 
 - Branch names: `feature/<slug>` unless the user says otherwise.
-- Paths vary by coding agent — never hardcode an OpenCode, Cursor, or other vendor path in this skill.
+- Paths vary by coding agent — never hardcode a vendor-specific worktree directory in this skill.
 - Prefer the agent’s native worktree tooling when it already entered one; otherwise `git worktree add` is fine.
 
 ## Cleanup
