@@ -10,6 +10,7 @@ npx skills add drmaas/utility-skills
 
 # Install a specific skill
 npx skills add drmaas/utility-skills --skill image-preprocess
+npx skills add drmaas/utility-skills --skill selenium-automation
 npx skills add drmaas/utility-skills --skill rpi
 npx skills add drmaas/utility-skills --skill sdd
 npx skills add drmaas/utility-skills --skill doit
@@ -69,6 +70,16 @@ npx skills add drmaas/utility-skills --skill image-preprocess
 
 See [`skills/image-preprocess/README.md`](skills/image-preprocess/README.md).
 
+### selenium-automation
+
+Browser automation and E2E testing with Selenium WebDriver on Node.js 22+ / TypeScript / Vitest — Page Object Model, explicit waits, locators, recommended test browsers (Chrome for Testing, versioned Firefox, Edge, Safari), headless runs, and Vitest lifecycle patterns.
+
+```bash
+npx skills add drmaas/utility-skills --skill selenium-automation
+```
+
+See [`skills/selenium-automation/README.md`](skills/selenium-automation/README.md).
+
 ---
 
 ## Repository Structure
@@ -101,6 +112,9 @@ skills/
     scripts/
       preprocess_image.sh
       preprocess_batch.sh
+  selenium-automation/
+    SKILL.md
+    README.md
 ```
 
 ## License
