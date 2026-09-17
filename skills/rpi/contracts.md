@@ -1,5 +1,7 @@
 # Contracts (host: `docs/contracts.md`)
 
+**Audience:** `hybrid` (humans and agents; precise surfaces and invariants).
+
 One file for all contracts between network layers and subsystems. Not a directory.
 
 ## Ask timing

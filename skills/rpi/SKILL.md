@@ -83,7 +83,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 - Keep public diagnostics and serialized output deterministic.
 - Approved `prd.md`, `research.md`, `plan.md`, and `refactor.md` are append-only until freeze moves them. After freeze they live on final paths inside the feature PR.
 - RPI artifacts are decision records once approved, not behavior specs. Prefer code → tests → architecture docs → decision records when the host does not define priority.
-- All RPI-generated docs are brief, use simple language, stay to the point, and contain no unnecessary words.
+- All RPI-generated docs are brief and to the point. Write each Markdown artifact for its audience mode (`human` | `agent` | `hybrid`) as listed in [`artifacts.md`](artifacts.md); follow the `clear-markdown` skill.
 
 ## Model selection
 
@@ -123,6 +123,7 @@ A model report is not verification evidence.
 - **`sdd`** — heavier: formal specification, single human review gate before implementation. Use when large, cross-cutting, or compliance/security heavy.
 - **`doit`** — lighter: no formal spec, no human approval gate. Use when well-scoped and bounded.
 - **rpi** (this skill) — middle ground: PRD + markdown artifacts under `docs/decisions/<feature>/`, review cycles, contracts/ADRs as needed, freeze into the feature PR.
+- **`clear-markdown`** — audience modes (`human` / `agent` / `hybrid`) for Markdown this workflow writes.
 
 ## Source / further reading
 

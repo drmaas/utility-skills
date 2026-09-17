@@ -32,6 +32,7 @@ Current skills:
 - `doit` — fast path for well-scoped changes (no formal spec/gate); self-contained under `skills/doit/`.
 - `image-preprocess` — preprocesses images via Tesseract OCR + Moondream for text-only LLMs.
 - `selenium-automation` — Selenium WebDriver browser automation guidance for Node.js 22+ / TypeScript / Vitest (POM, waits, Chrome for Testing / Firefox / Edge / Safari).
+- `clear-markdown` — plain-language Markdown with `human` / `agent` / `hybrid` audience modes (default `hybrid`).
 
 `rpi`, `sdd`, and `doit` share an identical `models.md` (role vocabulary + fit/complexity/constraints selection + all three stage→role maps). When editing model routing, update all three copies.
 

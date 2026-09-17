@@ -1,5 +1,7 @@
 # Human review gates
 
+**Audience for gate packets:** `human` — plain language; no jargon dumps. Artifact files keep the audiences in [`artifacts.md`](artifacts.md).
+
 After every agent review phase, pause and surface (1) a **plain-language change explanation**, (2) a **phase content summary**, (3) the agent's review findings, and (4) any **open questions with recommendations**. The user decides only after the agent has self-revised.
 
 ## Where the gates fire

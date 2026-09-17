@@ -67,18 +67,44 @@ Before broad repository reads in Stage 1 (and again when architecture needs deep
 
 ## Workflow state and artifacts
 
-Use the repository's established locations when they exist. Otherwise use these defaults:
+Use the repository's established locations when they exist. Otherwise use these defaults.
+
+Write each Markdown file for its **audience mode** (`human` | `agent` | `hybrid`) per the `clear-markdown` skill. Frozen copies keep the same mode as the draft.
+
+| Path / artifact | Purpose | Audience |
+| --- | --- | --- |
+| *(ephemeral brainstorm — do not write `docs/decisions/<feature>/brainstorm.md`)* | Working context only | — |
+| `docs/architecture.md` | Living architecture / boundary decisions | `hybrid` |
+| `docs/decisions/<feature>/spec.md` → `docs/specs/<feature>.md` | Testable specification (`REQ-*` / `AC-*`) | `hybrid` |
+| `docs/decisions/<feature>/spec-NN-<topic>.md` | Post-approval spec correction (append-only sibling) | `hybrid` |
+| `docs/decisions/<feature>/plan.md` → `docs/plans/<feature>.md` | Ordered implementation plan mapped to ACs | `hybrid` |
+| Plan addendum (or amend workflow log) | Post-approval plan corrections | `agent` |
+| `docs/decisions/<feature>/workflow.md` → `docs/workflows/<feature>-workflow.md` | Stage status, reviews, verify cmds, model rationale | `agent` |
+| `docs/decisions/<feature>/research.md` → `docs/research/` | Carry-over from prior RPI only; freeze on release | `hybrid` |
+| Spec / release gate packets (chat) | Plain-language human decision | `human` |
+| Task / PR description (small-change alternate) | Spec/plan content when not large enough for durable files | `hybrid` |
+| Host `README.md` (Stage 10) | Setup, usage, user-visible examples | `human` |
+| Host `AGENTS.md` (Stage 10) | Agent orientation | `agent` |
+| User guides, CLI/API refs, changelog / release notes | As touched in Stage 10 | `human` |
+| Subagent stage brief (chat / Task prompt) | Fresh review context | `agent` |
 
 - Brainstorm notes: ephemeral working context only. Do not create or retain `docs/decisions/<feature>/brainstorm.md` files. Preserve only the decisions that survive synthesis in the architecture, specification, plan, and workflow record.
-- Architecture decision: `docs/architecture.md` (human readable), updated as boundaries change.
-- Specification: `docs/decisions/<feature>/spec.md` while in draft or approved status. On release or supersession the file is moved (not copied, not edited) to `docs/specs/<feature>.md` and gains a `> Status: frozen <date>` header.
-- Implementation plan: `docs/decisions/<feature>/plan.md` while in draft or approved status. On release or supersession the file is moved to `docs/plans/<feature>.md` and frozen.
-- Workflow log: `docs/decisions/<feature>/workflow.md` — running record of stage status, review rounds, findings, verification results, and model-selection rationale. On feature completion the file is moved to `docs/workflows/<feature>-workflow.md` and frozen.
+- Architecture decision: `docs/architecture.md` (**audience:** `hybrid`), updated as boundaries change.
+- Specification: `docs/decisions/<feature>/spec.md` (**audience:** `hybrid`) while in draft or approved status. On release or supersession the file is moved (not copied, not edited) to `docs/specs/<feature>.md` and gains a `> Status: frozen <date>` header.
+- Implementation plan: `docs/decisions/<feature>/plan.md` (**audience:** `hybrid`) while in draft or approved status. On release or supersession the file is moved to `docs/plans/<feature>.md` and frozen.
+- Workflow log: `docs/decisions/<feature>/workflow.md` (**audience:** `agent`) — running record of stage status, review rounds, findings, verification results, and model-selection rationale. On feature completion the file is moved to `docs/workflows/<feature>-workflow.md` and frozen.
 - Tests: mapped to acceptance-criterion IDs where practical.
 
 Decision records under `docs/specs/`, `docs/plans/`, `docs/workflows/`, and `docs/research/` are **frozen decision history**: do not edit them. If a record goes stale, write a new one with a `> Superseded by:` footer pointing to the replacement. The code is the source of truth for current behavior; decision records describe the decision, not the system. Prefer code → tests → architecture docs → decision records when the host does not define priority.
 
 Prefer durable documents for the architecture, specification, and plan when the change is large enough that another engineer will need to implement or review it. For a small change, the same information may be kept in the task or PR description, but still pass through every gate. If old brainstorm files exist, treat them as disposable working artifacts and prompt before deleting them.
+
+### Skill-bundle Markdown (this package)
+
+| Path | Audience |
+| --- | --- |
+| `README.md` | `human` |
+| `SKILL.md`, `models.md` | `agent` |
 
 ## Stage 0 — Enter an isolated worktree
 
@@ -236,13 +262,13 @@ Never exceed three rounds. If actionable disagreement or findings remain after r
 
 ## Stage 10 — Documentation updates
 
-Once behavior and review findings are stable, have the documentation model (role `docs`) update the files this change actually touches. Update at minimum:
+Once behavior and review findings are stable, have the documentation model (role `docs`) update the files this change actually touches. Use `clear-markdown` audience modes. Update at minimum:
 
-- `docs/architecture.md` when the change alters components, boundaries, data/control flow, or decisions.
-- `README.md` when the change alters setup, usage, or examples visible to users.
-- `AGENTS.md` orientation line when the change shifts what an agent working in the repo needs to know first.
+- `docs/architecture.md` (**audience:** `hybrid`) when the change alters components, boundaries, data/control flow, or decisions.
+- `README.md` (**audience:** `human`) when the change alters setup, usage, or examples visible to users.
+- `AGENTS.md` (**audience:** `agent`) orientation line when the change shifts what an agent working in the repo needs to know first.
 
-Then update the rest of the documentation set as needed: user guides, CLI/API references, examples, configuration, migration, release, and troubleshooting docs; changelog or release notes when the repository uses them.
+Then update the rest of the documentation set as needed (**audience:** `human` unless the file is agent-facing): user guides, CLI/API references, examples, configuration, migration, release, and troubleshooting docs; changelog or release notes when the repository uses them.
 
 Document supported platforms, limitations, security behavior, and the upgrade path. Keep examples executable or consistent with the implementation. Run documentation checks, links, generated-doc builds, or package checks that the repository provides. Record final release/status changes in the established workflow documentation.
 
@@ -306,3 +332,4 @@ A change is complete only when:
 
 - **`doit`** — lighter: no formal spec, no human approval gate before implementation.
 - **`rpi`** — middle ground: PRD + research/plan gates, specialized reviewers, freeze into the feature PR.
+- **`clear-markdown`** — audience modes (`human` / `agent` / `hybrid`) for Markdown this workflow writes.

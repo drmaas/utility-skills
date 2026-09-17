@@ -1,5 +1,7 @@
 # RPI specialized agents
 
+**Audience:** `agent` for every brief and phase template under `agents/` and `templates/`.
+
 Role briefs for Task subagents. Spawn with `subagent_type: generalPurpose`, load the brief + phase template, resolve model via [`../models.md`](../models.md).
 
 | Agent | Phases | Model role |

@@ -14,6 +14,7 @@ npx skills add drmaas/utility-skills --skill selenium-automation
 npx skills add drmaas/utility-skills --skill rpi
 npx skills add drmaas/utility-skills --skill sdd
 npx skills add drmaas/utility-skills --skill doit
+npx skills add drmaas/utility-skills --skill clear-markdown
 
 # Install to a specific agent (see `npx skills add --help` for supported hosts)
 npx skills add drmaas/utility-skills --agent <agent>
@@ -27,6 +28,16 @@ After installation, your agent will automatically load the relevant skill when i
 ---
 
 ## Skills
+
+### clear-markdown
+
+Write Markdown in clear language with short sentences and logical structure. Choose audience mode `human`, `agent`, or `hybrid` (default for `SKILL.md` / `AGENTS.md` / most repo docs).
+
+```bash
+npx skills add drmaas/utility-skills --skill clear-markdown
+```
+
+See [`skills/clear-markdown/README.md`](skills/clear-markdown/README.md).
 
 ### rpi
 
@@ -113,6 +124,9 @@ skills/
       preprocess_image.sh
       preprocess_batch.sh
   selenium-automation/
+    SKILL.md
+    README.md
+  clear-markdown/
     SKILL.md
     README.md
 ```

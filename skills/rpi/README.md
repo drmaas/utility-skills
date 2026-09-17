@@ -6,7 +6,7 @@ Markdown-driven engineering workflow for coding agents. Separates research, plan
 
 **Not for:** tiny one-shot fixes (`doit` / plain implement) or heavy compliance / formal-spec work (`sdd`). The skill starts with a fit check and can hand off.
 
-**Core ideas:** fresh subagent per phase; artifacts under `docs/decisions/<feature>/` while active; TDD by default; verify (format/lint/typecheck/tests) before each implementation review; specialized reviewers (PRD critic, architecture-security, QA-testability, adversarial code); optional `docs/contracts.md` + ADRs; freeze into the feature PR (no dangling drafts).
+**Core ideas:** fresh subagent per phase; artifacts under `docs/decisions/<feature>/` while active (each file has a `human` / `agent` / `hybrid` audience — see [`artifacts.md`](artifacts.md)); TDD by default; verify (format/lint/typecheck/tests) before each implementation review; specialized reviewers (PRD critic, architecture-security, QA-testability, adversarial code); optional `docs/contracts.md` + ADRs; freeze into the feature PR (no dangling drafts).
 
 Install:
 

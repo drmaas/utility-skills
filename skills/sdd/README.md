@@ -14,7 +14,7 @@ Install:
 npx skills add drmaas/utility-skills --skill sdd
 ```
 
-Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file as `rpi` / `doit`): [`models.md`](models.md).
+Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file as `rpi` / `doit`): [`models.md`](models.md). Markdown artifact audiences (`human` / `agent` / `hybrid`) are listed under **Workflow state and artifacts** in `SKILL.md`.
 
 ## Stages (summary)
 

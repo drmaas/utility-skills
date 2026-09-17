@@ -2,22 +2,42 @@
 
 Active RPI drafts live under `docs/decisions/<feature>/`. Contracts and ADRs use durable host paths during the feature. At freeze (`phases/11-freeze.md`), move drafts to final paths, delete the decisions folder, and commit everything into the feature PR.
 
-All generated docs are brief, use simple language, stay to the point, and contain no unnecessary words.
+Write each Markdown file for its **audience mode** (`human` | `agent` | `hybrid`) per the `clear-markdown` skill. Frozen copies keep the same mode as the draft. All generated docs stay brief and to the point.
 
-## Path layout (active)
+## Audience modes
 
-```
-docs/decisions/<feature>/
-  prd.md          # PRD phase
-  research.md     # research phase
-  plan.md         # plan phase
-  checklist.md    # plan phase; updated through implement
-  refactor.md     # optional refactor phase
-  workflow.md     # optional human-requested log
+| Mode | Write for |
+| --- | --- |
+| `human` | People scanning and deciding (plain language, a11y) |
+| `agent` | Models following instructions (imperative, precise, token-lean) |
+| `hybrid` | Humans edit; agents execute (default when both read the file) |
 
-docs/contracts.md           # single contracts file (if opted in)
-docs/adrs/NNNN-slug.md      # locked architecture decisions
-```
+## Path layout (active) and audience
+
+| Path | Phase / role | Audience |
+| --- | --- | --- |
+| `docs/decisions/<feature>/prd.md` | PRD | `hybrid` |
+| `docs/decisions/<feature>/research.md` | Research | `hybrid` |
+| `docs/decisions/<feature>/plan.md` | Plan | `hybrid` |
+| `docs/decisions/<feature>/checklist.md` | Plan → implement (deleted at freeze) | `agent` |
+| `docs/decisions/<feature>/refactor.md` | Optional refactor | `hybrid` |
+| `docs/decisions/<feature>/workflow.md` | Optional gate/decision log | `agent` |
+| `docs/contracts.md` | Opt-in contracts | `hybrid` |
+| `docs/adrs/NNNN-slug.md` | Locked ADRs at plan review | `hybrid` |
+| Gate packets in chat (`human-gates.md`) | Every human gate | `human` |
+| Feature PR body / commit message | Freeze / release | `hybrid` |
+
+### Freeze destinations (same audience as draft)
+
+| Draft | Final path | Audience |
+| --- | --- | --- |
+| `prd.md` | `docs/plans/<feature>-prd.md` | `hybrid` |
+| `research.md` | `docs/research/<feature>.md` | `hybrid` |
+| `plan.md` | `docs/plans/<feature>.md` | `hybrid` |
+| `refactor.md` | `docs/plans/<feature>-refactor.md` | `hybrid` |
+| `workflow.md` | `docs/workflows/<feature>-workflow.md` | `agent` |
+| `checklist.md` | *(deleted)* | — |
+| `docs/contracts.md`, `docs/adrs/*` | unchanged paths | `hybrid` |
 
 `<feature>` is kebab-case, lowercased, no spaces, no leading or trailing dashes.
 
@@ -26,6 +46,8 @@ Derive `<feature>` from the PRD/problem at workflow start. Do not ask for a slug
 If the decisions directory does not exist, create it before writing. Never use `docs/rpi/`.
 
 ## prd.md
+
+**Audience:** `hybrid` — product-readable Problem/User/Outcome; precise Requirements agents can execute.
 
 Sections:
 
@@ -44,6 +66,8 @@ On freeze: move to `docs/plans/<feature>-prd.md`.
 
 ## research.md
 
+**Audience:** `hybrid` — engineers and later agents both consume findings.
+
 Sections:
 
 - **Problem restatement** — from the PRD/problem.
@@ -55,6 +79,8 @@ Sections:
 On freeze: move to `docs/research/<feature>.md`.
 
 ## plan.md
+
+**Audience:** `hybrid` — humans approve strategy; agents implement phases.
 
 Sections:
 
@@ -71,23 +97,29 @@ On freeze: move to `docs/plans/<feature>.md`.
 
 ## checklist.md
 
+**Audience:** `agent` — implementation tracker for the implementer; humans may glance at gates, but write it imperative and checkbox-dense.
+
 Implementation tracker. Markdown checkboxes by phase. Implementer checks off tasks. Plan review initializes it. May include contract tooling tasks if user opted in.
 
 On freeze: **delete**.
 
 ## docs/contracts.md
 
-Single host file for all contracts. See [`contracts.md`](contracts.md). Sections point at tooling (OpenAPI, GraphQL, Storybook, …). Not moved at freeze; ship as-is in the feature PR.
+**Audience:** `hybrid`. Single host file for all contracts. See [`contracts.md`](contracts.md). Sections point at tooling (OpenAPI, GraphQL, Storybook, …). Not moved at freeze; ship as-is in the feature PR.
 
 ## docs/adrs/
 
-See [`adrs.md`](adrs.md). Written at plan review when decisions lock. Not moved at freeze; ship in the feature PR.
+**Audience:** `hybrid`. See [`adrs.md`](adrs.md). Written at plan review when decisions lock. Not moved at freeze; ship in the feature PR.
 
 ## refactor.md
 
-Only if user opts into refactor. Sections: Candidate, Expected benefit, Risk, Scope, Test plan.
+**Audience:** `hybrid`. Only if user opts into refactor. Sections: Candidate, Expected benefit, Risk, Scope, Test plan.
 
 On freeze: move to `docs/plans/<feature>-refactor.md`.
+
+## workflow.md
+
+**Audience:** `agent`. Optional human-requested gate/decision log. Dense status and decisions; not a teaching doc.
 
 ## Freeze (feature PR)
 
@@ -106,3 +138,11 @@ No dangling decision drafts. No docs-only follow-up PR by default.
 - Never delete artifacts during an active feature without asking (except freeze deletes checklist + empty decisions folder after moves).
 - If abandoned: leave a top note `ABANDONED — superseded by …` or remove only with user OK.
 - Never hardcode foreign feature paths; use the slug.
+
+## Skill-bundle Markdown (this package)
+
+| Path | Audience |
+| --- | --- |
+| `README.md` | `human` |
+| `SKILL.md`, `models.md`, `worktree.md`, `artifacts.md`, `contracts.md`, `adrs.md`, `human-gates.md` | `agent` (hybrid only when editing for human maintainers of the skill) |
+| `phases/*.md`, `templates/*.md`, `agents/*.md` | `agent` |

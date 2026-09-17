@@ -1,5 +1,7 @@
 # Architecture Decision Records
 
+**Audience:** `hybrid` for each `docs/adrs/NNNN-slug.md`.
+
 Host path: `docs/adrs/NNNN-slug.md`.
 
 ## When to write
