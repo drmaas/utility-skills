@@ -29,7 +29,7 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 8. Verification (real commands)  
 9. Fresh-context review (≤3 rounds)  
 10. Documentation  
-11. Commit / push / PR / merge / cleanup (user auth; same plain-language + questions packet)
+11. Freeze docs, then commit / push / PR / merge / cleanup (user auth; frozen decision docs in the feature PR; same plain-language + questions packet)
 
 ## Token spend
 

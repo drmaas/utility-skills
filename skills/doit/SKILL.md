@@ -1,6 +1,6 @@
 ---
 name: doit
-description: Run a fast, execution-focused development workflow for well-understood software changes. Use this skill when the user wants to just get a clearly scoped change done, asks to skip formal specs or planning overhead, or requests the lightweight counterpart to an SDD/TDD process. It keeps an isolated worktree, ephemeral model-assisted brainstorming, a lightweight plan with a focused architecture note, tests-first model-assisted coding, model-assisted verification, fresh-context review, documentation, and release preparation, but deliberately skips the formal specification and human review gate. Distinct from sdd (formal spec + gate) and rpi (multi-gate research loop).
+description: Run a fast, execution-focused development workflow for well-understood software changes. Use this skill when the user wants to just get a clearly scoped change done, asks to skip formal specs or planning overhead, or requests the lightweight counterpart to an SDD/TDD process. It keeps an isolated worktree, ephemeral model-assisted brainstorming, a lightweight plan with a focused architecture note, tests-first model-assisted coding, model-assisted verification, fresh-context review, documentation, and a final freeze that commits durable decision docs into the feature PR, but deliberately skips the formal specification and human review gate. Distinct from sdd (formal spec + gate) and rpi (multi-gate research loop).
 compatibility: Requires Git with worktree support, the repository's existing development tools, and an independent review context (fresh Task/generalPurpose or harness equivalent). Optional graphify for cheaper codebase orientation.
 metadata:
   repository: https://github.com/drmaas/utility-skills
@@ -41,6 +41,7 @@ Do not silently skip stages. If a stage is not applicable, record why. Keep a sh
 - Before release operations, audit staged, unstaged, tracked, and untracked files for secrets, local settings, generated artifacts, unrelated changes, and accidental edits outside the worktree.
 - Keep state-inspection commands clearly scoped so branch, path, and status output cannot be confused; a failed or malformed tool call is a no-op, not a reason to guess.
 - Commit, push, PR creation, merge, and cleanup are separate release actions for audit purposes, but one explicit authorization for a clearly defined set remains valid for that set. Ask again only when authorization is absent, ambiguous, or the scope changes; never force-push or push directly to a protected default branch. Prompt immediately before deleting files/directories or removing worktrees.
+- Before release commit: freeze any durable drafts out of `docs/decisions/<feature>/` onto final paths, stage those moves with the feature changes, and include them in the feature PR. Do not leave dangling decision drafts for a later docs-only commit. Skip freeze only when no durable decision files exist (notes/plan lived in the task/PR description); record that reason.
 - Prefer structured notes over dumping chat into the repository. Subagents receive a stage brief and artifact paths — not this full skill text.
 
 ## Model selection
@@ -85,11 +86,11 @@ Write each Markdown file for its **audience mode** (`human` | `agent` | `hybrid`
 | Path / artifact | Purpose | Audience |
 | --- | --- | --- |
 | *(ephemeral brainstorm — do not write `docs/decisions/<feature>/brainstorm.md`)* | Working context only | — |
-| `docs/decisions/<feature>/notes.md` | Behavioral notes + `AC-*` when multi-session or plan ≥5 tasks | `hybrid` |
+| `docs/decisions/<feature>/notes.md` → `docs/plans/<feature>-notes.md` | Behavioral notes + `AC-*` when multi-session or plan ≥5 tasks | `hybrid` |
 | Task / issue / PR description | Default home for notes/plan when files are not warranted | `hybrid` |
 | `docs/decisions/<feature>/plan.md` → `docs/plans/<feature>.md` | Lightweight ordered plan + architecture note | `hybrid` |
 | Plan addendum (or amend workflow log / notes) | Post-Stage-2 plan corrections | `agent` |
-| `docs/decisions/<feature>/workflow.md` → host frozen workflow path | Stage status, reviews, verify cmds, model rationale | `agent` |
+| `docs/decisions/<feature>/workflow.md` → `docs/workflows/<feature>-workflow.md` | Stage status, reviews, verify cmds, model rationale | `agent` |
 | `docs/architecture.md` | Durable architecture when boundaries/decisions shift | `hybrid` |
 | Host `README.md` (Stage 7) | Setup, usage, user-visible examples | `human` |
 | Host `AGENTS.md` (Stage 7) | Agent orientation | `agent` |
@@ -98,7 +99,7 @@ Write each Markdown file for its **audience mode** (`human` | `agent` | `hybrid`
 | Subagent stage brief (chat / Task prompt) | Fresh review context | `agent` |
 | Stage status checklist (in workflow log or task notes) | Orchestration progress | `agent` |
 
-On release, move any existing `docs/decisions/<feature>/{plan,notes,workflow}.md` to the frozen paths the host uses (`docs/plans/`, etc.), then remove the decisions folder when empty. Do not create or retain brainstorm files.
+On release, move any existing `docs/decisions/<feature>/{plan,notes,workflow}.md` to the freeze destinations above, add `> Status: frozen <YYYY-MM-DD>` to each moved file, then remove the decisions folder when empty. Commit those paths on the feature branch so the feature PR contains them. Do not create or retain brainstorm files. Skip freeze only when no durable decision files exist; record that reason.
 
 ### Skill-bundle Markdown (this package)
 
@@ -164,7 +165,7 @@ Have the architecture+plan model (role `plan`) write them. Record:
 - The acceptance-check IDs it covers, when useful.
 - The test or verification that proves it is done.
 
-Persist the plan to `docs/decisions/<feature>/plan.md` when the change is large enough to outlive the session; on release, move it to `docs/plans/<feature>.md` and freeze (same lifecycle as SDD/RPI — no parallel doc trees). Otherwise keep it in the task or PR description. Record durable architecture decisions in `docs/architecture.md` only when the change shifts boundaries or decisions. If planning reveals scope or architecture ambiguity, return to Stage 1 rather than guessing.
+Persist the plan to `docs/decisions/<feature>/plan.md` when the change is large enough to outlive the session; on release, move it to `docs/plans/<feature>.md`, freeze it, and commit that path into the feature PR (same lifecycle as SDD/RPI — no parallel doc trees). Otherwise keep it in the task or PR description. Record durable architecture decisions in `docs/architecture.md` only when the change shifts boundaries or decisions. If planning reveals scope or architecture ambiguity, return to Stage 1 rather than guessing.
 
 Once the Stage 2 plan is recorded (in `plan.md` or the task/PR description), it is append-only: corrections are made by amending the workflow log/notes or writing a new plan addendum, not by editing the plan in place. There is no formal approval gate — “recorded” means written for this workflow, not user-signed.
 
@@ -239,7 +240,25 @@ Then update the rest of the documentation set as needed (**audience:** `human` u
 
 Document supported platforms, limitations, security behavior, and upgrade steps when relevant. Keep examples consistent with the implementation and run available documentation checks or generated-doc builds. Record final release/status changes in the established workflow documentation.
 
-## Stage 8 — Commit, push, PR, merge, and cleanup
+## Stage 8 — Freeze docs, then commit / push / PR / merge / cleanup
+
+### Freeze (before the release gate)
+
+If durable files exist under `docs/decisions/<feature>/`, move them (not copy) to final paths and add `> Status: frozen <YYYY-MM-DD>` at the top of each moved file. Skip missing files.
+
+| Draft | Final path |
+| --- | --- |
+| `plan.md` | `docs/plans/<feature>.md` |
+| `notes.md` | `docs/plans/<feature>-notes.md` |
+| `workflow.md` | `docs/workflows/<feature>-workflow.md` |
+
+Then remove the empty `docs/decisions/<feature>/` directory. Do not leave unfrozen durable drafts there.
+
+If the change never wrote durable decision files (notes/plan lived only in the task/PR description), skip freeze and record that reason in the release packet.
+
+Also stage any living docs touched earlier (`docs/architecture.md`, README, AGENTS, guides) with the same release commit — they are already on final paths.
+
+### Release gate
 
 Before release actions, present a release gate packet:
 
@@ -249,8 +268,12 @@ Before release actions, present a release gate packet:
 ## What this changes (plain language)
 <non-jargon explanation of what landed in the application>
 
+## Freeze summary
+- Paths moved (or "none — no durable decision files")
+- Living docs touched (architecture / README / AGENTS / …)
+
 ## Release summary
-- Changed-file list (paths)
+- Changed-file list (paths), including frozen decision docs
 - Verification evidence
 - Review-round result
 - Known limitations
@@ -266,13 +289,15 @@ Confirm the worktree contains only intended changes. Surface any remaining ambig
 With explicit user approval for the defined release-action set (an existing authorization remains valid unless it is absent, ambiguous, or the scope changes):
 
 1. Verify the active repository root, branch, worktree list, status, and recent commit-message conventions.
-2. Review staged, unstaged, tracked, and untracked files and diffs; exclude secrets, local settings, generated noise, and unrelated user work.
-3. Create a concise conventional commit when the repository uses conventional commits, describing why the change was made.
+2. Review staged, unstaged, tracked, and untracked files and diffs; exclude secrets, local settings, generated noise, and unrelated user work. Confirm freeze moves (or the recorded skip) are part of the pending change set.
+3. Create a concise conventional commit when the repository uses conventional commits, describing why the change was made. The commit **must** include frozen decision-doc paths (and deletions under `docs/decisions/<feature>/`) whenever those files existed — same commit as the feature code when practical, or an immediate follow-up commit on the same branch before opening/updating the PR. Never defer freeze to a separate docs-only PR by default.
 4. Push the feature branch to the expected remote. Never force-push or push directly to a protected default branch.
-5. Open or update a pull request using the repository's supported tooling. Include the problem, solution, scope, tests/verification, review-round summary, documentation changes, migrations, and known risks.
+5. Open or update a pull request using the repository's supported tooling. Include the problem, solution, scope, tests/verification, review-round summary, **frozen decision-doc paths**, documentation changes, migrations, and known risks. The PR must contain the frozen artifacts when they exist.
 6. When merge is in scope and authorized, wait for required checks and merge without bypassing branch protections.
 7. After merge, reconcile release/status documentation and verify the default branch, worktrees, local branches, and remote refs. Remove worktrees, local branches, or merged remote branches only when cleanup is in scope; prompt immediately before deleting files/directories or removing worktrees.
-8. Report the commit, branch, PR, merge result, cleanup result, verification evidence, and any remaining action required from the user.
+8. Report the commit, branch, PR, merge result, cleanup result, verification evidence, freeze paths (or skip reason), and any remaining action required from the user.
+
+Do not claim the workflow complete while `docs/decisions/<feature>/` still holds unfrozen durable drafts, or while freeze moves exist only as uncommitted local edits after the user authorized a release commit.
 
 If approval for any release action is absent or ambiguous, stop after preparing the exact proposed command or PR content. Do not infer permission to commit, push, merge, deploy, or delete.
 
@@ -289,13 +314,13 @@ If approval for any release action is absent or ambiguous, stop after preparing 
 - [ ] The canonical validation command was rerun after implementation and after later fixes; CI runs the same authoritative validation.
 - [ ] Fresh-context review passed within three rounds, or unresolved findings were escalated; mis-scope findings triggered a hard stop and `sdd` recommendation.
 - [ ] Documentation this change touches is updated (architecture, README, AGENTS as applicable).
-- [ ] On release, move any `docs/decisions/<feature>/{plan,notes,workflow}.md` that exist to the frozen paths the host uses (`docs/plans/`, etc.) and remove the decisions folder when empty of active drafts.
+- [ ] Durable decision drafts were frozen onto final paths (`docs/plans/<feature>.md`, `docs/plans/<feature>-notes.md`, `docs/workflows/<feature>-workflow.md` as applicable), the decisions folder removed, and those paths committed on the feature branch so the feature PR contains them — or freeze was skipped with a recorded reason (no durable decision files).
 - [ ] The user approved commit/push/PR actions before they were performed.
-- [ ] The final release audit covered staged, unstaged, tracked, and untracked files; the commit and PR contain only intended changes and include verification evidence.
+- [ ] The final release audit covered staged, unstaged, tracked, and untracked files; the commit and PR contain only intended changes, include frozen decision docs when they exist, and include verification evidence.
 - [ ] After merge, release/status documentation, the default branch, worktrees, local branches, and remote refs were reconciled and verified.
 
 ## Related skills
 
-- **`sdd`** — heavier: formal specification, single human review gate before implementation.
+- **`sdd`** — heavier: formal specification, single human review gate before implementation; freezes decision docs into the feature PR.
 - **`rpi`** — middle ground: PRD + research/plan gates, specialized reviewers, freeze into the feature PR.
 - **`clear-markdown`** — audience modes (`human` / `agent` / `hybrid`) for Markdown this workflow writes.

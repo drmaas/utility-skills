@@ -53,7 +53,7 @@ Further reading: [HumanLayer ace-fca](https://github.com/humanlayer/advanced-con
 
 ### sdd
 
-Spec-driven development: isolated worktree, ephemeral brainstorm, architecture, formal specification, human approval gate, implementation plan, tests-first coding, verification, fresh-context review, docs, and release. Use for non-trivial or compliance-heavy changes that need behavior locked before code.
+Spec-driven development: isolated worktree, ephemeral brainstorm, architecture, formal specification, human approval gate, implementation plan, tests-first coding, verification, fresh-context review, docs, and a final freeze that commits durable decision docs into the feature PR. Use for non-trivial or compliance-heavy changes that need behavior locked before code.
 
 ```bash
 npx skills add drmaas/utility-skills --skill sdd
@@ -63,7 +63,7 @@ See [`skills/sdd/README.md`](skills/sdd/README.md).
 
 ### doit
 
-Fast path for well-scoped changes: worktree, ephemeral brainstorm, lightweight architecture note + plan, tests-first, verify, fresh-context review, docs, release — no formal spec and no pre-implementation human gate. Escalate to `sdd` when scope is unclear.
+Fast path for well-scoped changes: worktree, ephemeral brainstorm, lightweight architecture note + plan, tests-first, verify, fresh-context review, docs, and a final freeze that commits durable decision docs into the feature PR when files exist — no formal spec and no pre-implementation human gate. Escalate to `sdd` when scope is unclear.
 
 ```bash
 npx skills add drmaas/utility-skills --skill doit

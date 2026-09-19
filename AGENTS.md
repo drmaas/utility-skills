@@ -28,8 +28,8 @@ Every skill in `skills/<name>/SKILL.md` follows the Agent Skills spec:
 Current skills:
 
 - `rpi` — research-plan-implement with fit check, PRD, specialized reviewers, contracts/ADRs, freeze-into-PR; self-contained under `skills/rpi/` (includes bundled `models.md` and `agents/`).
-- `sdd` — spec-driven development with formal specification and a single human gate before implementation; self-contained under `skills/sdd/`.
-- `doit` — fast path for well-scoped changes (no formal spec/gate); self-contained under `skills/doit/`.
+- `sdd` — spec-driven development with formal specification, a single human gate before implementation, and freeze-into-PR for decision docs; self-contained under `skills/sdd/`.
+- `doit` — fast path for well-scoped changes (no formal spec/gate) with freeze-into-PR when durable decision files exist; self-contained under `skills/doit/`.
 - `image-preprocess` — preprocesses images via Tesseract OCR + Moondream for text-only LLMs.
 - `selenium-automation` — Selenium WebDriver browser automation guidance for Node.js 22+ / TypeScript / Vitest (POM, waits, Chrome for Testing / Firefox / Edge / Safari).
 - `clear-markdown` — plain-language Markdown with `human` / `agent` / `hybrid` audience modes (default `hybrid`).

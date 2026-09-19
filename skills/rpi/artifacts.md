@@ -128,7 +128,7 @@ After final review (+ optional refactor), run `phases/11-freeze.md`:
 1. Move durable drafts to final paths (table in that phase file).
 2. Keep `docs/contracts.md` and `docs/adrs/*` final on their paths.
 3. Delete checklist; remove empty `docs/decisions/<feature>/`.
-4. Ask user to commit freeze on the feature branch and include it in the feature PR.
+4. Ask user to commit freeze on the feature branch and include it in the feature PR. Confirm the PR contains the frozen paths.
 
 No dangling decision drafts. No docs-only follow-up PR by default.
 

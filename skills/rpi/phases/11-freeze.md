@@ -9,7 +9,7 @@ Goal: freeze all durable docs onto final paths, remove draft trees, and commit t
 
 ## Freeze moves
 
-From `docs/decisions/<feature>/` (skip missing files):
+From `docs/decisions/<feature>/` (skip missing files). Move (not copy); add `> Status: frozen <YYYY-MM-DD>` at the top of each moved file:
 
 | Draft | Final path |
 | --- | --- |
@@ -60,11 +60,13 @@ Rules:
 
 - Never auto-commit, push, or open a PR without explicit choice.
 - Workflow must not claim done while `docs/decisions/<feature>/` still holds unfrozen durable drafts.
+- Workflow must not claim done while freeze moves exist only as uncommitted local edits after the user chose a commit option.
 - Mid-feature phase commits may already exist; this step only finishes docs into the same PR.
+- When the user authorizes open/update PR, confirm the PR diff includes the frozen final paths (and removals under `docs/decisions/<feature>/`).
 
 ## Exit conditions
 
-- Durable docs on final paths.
+- Durable docs on final paths with freeze status headers.
 - Checklist and decisions folder gone.
 - Freeze committed (or user explicitly aborted).
 - PR includes frozen docs when user authorized open/update.
