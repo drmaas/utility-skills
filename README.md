@@ -15,6 +15,7 @@ npx skills add drmaas/utility-skills --skill rpi
 npx skills add drmaas/utility-skills --skill sdd
 npx skills add drmaas/utility-skills --skill doit
 npx skills add drmaas/utility-skills --skill clear-markdown
+npx skills add drmaas/utility-skills --skill cleanup
 
 # Install to a specific agent (see `npx skills add --help` for supported hosts)
 npx skills add drmaas/utility-skills --agent <agent>
@@ -38,6 +39,16 @@ npx skills add drmaas/utility-skills --skill clear-markdown
 ```
 
 See [`skills/clear-markdown/README.md`](skills/clear-markdown/README.md).
+
+### cleanup
+
+Watch a PR until checks pass, squash-merge it (delete remote branch), then remove the matching git worktree if present and delete the local branch. Distinct from autopilot (which never merges).
+
+```bash
+npx skills add drmaas/utility-skills --skill cleanup
+```
+
+See [`skills/cleanup/README.md`](skills/cleanup/README.md).
 
 ### rpi
 
@@ -127,6 +138,9 @@ skills/
     SKILL.md
     README.md
   clear-markdown/
+    SKILL.md
+    README.md
+  cleanup/
     SKILL.md
     README.md
 ```
