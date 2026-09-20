@@ -67,6 +67,7 @@ Before broad repository reads in Stage 1, check the worktree (and repo root if d
 
 - **Present:** prefer `graphify query`, `graphify path`, `graphify explain`, and `graphify-out/GRAPH_REPORT.md` over blind multi-file exploration. Still open source files to verify citations (path + line).
 - **Absent:** recommend once that the user install and run [graphify](https://github.com/Graphify-Labs/graphify). Do not block; do not install inside a subagent. One short recommendation is enough.
+- **At plan start (Stage 2):** before writing the plan, check the worktree for `graphify-out/graph.json`. If the `graphify` CLI is installed (e.g. `command -v graphify`) but the worktree has no graph, ask the user once whether to run it there now (e.g. `graphify` from the worktree root) so plan and implementation stages can leverage it. With user consent, run it in the worktree and wait for `graphify-out/graph.json`; on refusal or failure, continue without it. If the graph is already present or the CLI is missing, do not ask — just follow the rules above.
 
 ## Determinism
 
@@ -147,7 +148,7 @@ If discovery reveals a substantial new product decision, cross-cutting architect
 
 Capture a short, ordered plan that another engineer could follow, preceded by a focused architecture note. Keep both proportional to the change — a few bulleted tasks and 2–4 architecture bullets are enough; do not produce a heavyweight specification-and-plan package.
 
-Have the architecture+plan model (role `plan`) write them. Record:
+Have the architecture+plan model (role `plan`) write them. Before the plan is written, apply the **At plan start** rule in the Graphify section above so the fresh worktree can leverage the graph. Record:
 
 **Architecture note (only the non-obvious parts):**
 

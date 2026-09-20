@@ -56,6 +56,7 @@ Before broad repository reads in Stage 1 (and again when architecture needs deep
 
 - **Present:** prefer `graphify query`, `graphify path`, `graphify explain`, and `graphify-out/GRAPH_REPORT.md` over blind multi-file exploration. Still open source files to verify citations (path + line).
 - **Absent:** recommend once that the user install and run [graphify](https://github.com/Graphify-Labs/graphify) so later stages and re-runs can query a persistent graph. Do not block the workflow; do not install graphify inside a subagent. One short recommendation is enough.
+- **At plan start (Stage 5):** before writing the plan, check the worktree for `graphify-out/graph.json`. If the `graphify` CLI is installed (e.g. `command -v graphify`) but the worktree has no graph, ask the user once whether to run it there now (e.g. `graphify` from the worktree root) so plan, implementation, and review stages can leverage it. With user consent, run it in the worktree and wait for `graphify-out/graph.json`; on refusal or failure, continue without it. If the graph is already present or the CLI is missing, do not ask — just follow the rules above.
 
 ## Determinism
 
@@ -197,7 +198,7 @@ Stop and wait for explicit approval. Resolve or explicitly defer open questions 
 
 ## Stage 5 — Write the implementation plan
 
-After approval, have the plan model (role `plan`) write the ordered plan to `docs/decisions/<feature>/plan.md`. It must be concrete enough for another engineer to execute. For each task include:
+After approval, have the plan model (role `plan`) write the ordered plan to `docs/decisions/<feature>/plan.md`. Before the plan is written, apply the **At plan start** rule in the Graphify section above so the fresh worktree can leverage the graph. It must be concrete enough for another engineer to execute. For each task include:
 
 - The relevant file, module, package, or configuration area.
 - The behavior or invariant being added/changed.

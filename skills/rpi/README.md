@@ -22,7 +22,7 @@ Full orchestrator instructions: [`SKILL.md`](SKILL.md). Role-based model routing
 2. **PRD** — Use an existing PRD or create one; product-requirements critic; human gate; ask about contracts + tooling.
 3. **Worktree** — Enter a feature worktree (path depends on the coding agent).
 4. **Research** → write `research.md` → agent review → human gate.
-5. **Plan** → write `plan.md` + `checklist.md` (and update `docs/contracts.md` if opted in).
+5. **Plan** → ask to run graphify in the worktree first (if installed and no graph yet) → write `plan.md` + `checklist.md` (and update `docs/contracts.md` if opted in).
 6. **Plan review** — Architecture-security then QA-testability; ADRs; set TDD vs Code first → human gate.
 7. **Per checklist phase:** implement → verify → adversarial code review → human gate → commit (asked, never auto).
 8. **Final review** → human gate.

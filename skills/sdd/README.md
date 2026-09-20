@@ -33,7 +33,7 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 
 ## Token spend
 
-- Prefer graphify (`graphify-out/graph.json`) before broad repo reads; recommend install once if missing — do not block.
+- Prefer graphify (`graphify-out/graph.json`) before broad repo reads; at plan start, ask once to run graphify in the worktree if installed and no graph exists yet — do not block.
 - Keep brainstorm ephemeral; retain only synthesized decisions.
 - Fresh review gets a minimal packet (request, approved spec, architecture, plan, diff, verification) — not prior chat.
 - Subagents get a stage brief + artifact paths, not the full skill.

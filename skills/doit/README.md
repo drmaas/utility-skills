@@ -30,7 +30,7 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 
 ## Token spend
 
-- Prefer graphify before broad repo reads; recommend install once if missing — do not block.
+- Prefer graphify before broad repo reads; at plan start, ask once to run graphify in the worktree if installed and no graph exists yet — do not block.
 - Keep brainstorm ephemeral; retain only architecture note + plan / notes.
 - Persist `notes.md` only when work spans sessions or the plan has ≥5 tasks; else task/PR description.
 - Fresh review gets a minimal packet — not prior chat.

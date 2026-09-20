@@ -21,7 +21,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 3. Derive feature slug from PRD/problem; capture base branch and model-selection constraints; enter a feature worktree (`worktree.md`).
 4. Research → `docs/decisions/<feature>/research.md`.
 5. Research review (agent + human gate).
-6. Planning → `plan.md`, `checklist.md`; if contracts in scope, update `docs/contracts.md`.
+6. Planning → `plan.md`, `checklist.md`; if contracts in scope, update `docs/contracts.md`. Before spawning the planning subagent, apply the Graphify rule in `phases/03-plan.md` (ask the user to run graphify in the worktree if the CLI is installed and no graph exists yet).
 7. Plan review: architecture-security then QA-testability (agent + human gate); write ADRs; harden contracts; set implementation strategy.
 8. Implementation (per phase in `checklist.md`; default TDD from `plan.md`).
 9. Verify per phase — format, lint, typecheck, tests; fix mechanical failures.
