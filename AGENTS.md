@@ -27,7 +27,7 @@ Every skill in `skills/<name>/SKILL.md` follows the Agent Skills spec:
 
 Current skills:
 
-- `rpi` — research-plan-implement with fit check, PRD, specialized reviewers, contracts/ADRs, freeze-into-PR; self-contained under `skills/rpi/` (includes bundled `models.md` and `agents/`).
+- `rpi` — research-plan-implement with fit check, PRD, specialized reviewers, targeted human gates, contracts/ADRs, freeze-into-PR; self-contained under `skills/rpi/` (includes bundled `models.md` and `agents/`).
 - `sdd` — spec-driven development with formal specification, a single human gate before implementation, and freeze-into-PR for decision docs; self-contained under `skills/sdd/`.
 - `doit` — fast path for well-scoped changes (no formal spec/gate) with freeze-into-PR when durable decision files exist; self-contained under `skills/doit/`.
 - `image-preprocess` — preprocesses images via Tesseract OCR + Moondream for text-only LLMs.

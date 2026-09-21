@@ -1,6 +1,6 @@
 # doit — Do-It (fast path)
 
-Lightweight execution workflow for well-scoped changes: worktree → ephemeral brainstorm → architecture note + short plan → tests-first → verify → fresh-context review → docs → release. Skips formal specification and the pre-implementation human gate.
+Lightweight execution workflow for well-scoped changes: worktree → ephemeral brainstorm → architecture note + short plan → tests-first → verify → fresh-context review with automatic in-scope fixes → docs → release. Skips formal specification and the pre-implementation human gate.
 
 **When to use:** clear request, bounded behavior change, formal SDD overhead would add little value.
 
@@ -24,7 +24,7 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 3. Tests first  
 4. Implementation  
 5. Verification (real commands)  
-6. Fresh-context review (≤3 rounds; hard stop → `sdd` on mis-scope)  
+6. Fresh-context review (≤3 rounds; auto-proceed on reasonable in-scope fixes; hard stop → `sdd` on mis-scope)
 7. Documentation  
 8. Freeze docs, then commit / push / PR / merge / cleanup (user auth; frozen decision docs in the feature PR when files exist; plain-language change explanation + open questions with recommendations)
 

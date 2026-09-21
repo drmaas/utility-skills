@@ -1,6 +1,6 @@
 # sdd — Spec-Driven Development
 
-Disciplined brainstorm → architecture → specification → human gate → plan → tests-first → verify → fresh-context review → docs → release. Makes intended behavior explicit before code; maps tests to acceptance criteria; catches implementer-blind spots with an independent review.
+Disciplined brainstorm → architecture → specification → human gate → plan → tests-first → verify → fresh-context review with automatic in-scope fixes → docs → release. Makes intended behavior explicit before code; maps tests to acceptance criteria; catches implementer-blind spots with an independent review.
 
 **When to use:** non-trivial, cross-cutting, compliance/security-sensitive, or ambiguous product changes that need a formal spec and one hard approval before implementation.
 
@@ -27,7 +27,7 @@ Agent instructions: [`SKILL.md`](SKILL.md). Role-based model routing (same file 
 6. Tests first  
 7. Implementation  
 8. Verification (real commands)  
-9. Fresh-context review (≤3 rounds)  
+9. Fresh-context review (≤3 rounds; auto-proceed on reasonable in-scope fixes, escalate only unresolved material decisions)
 10. Documentation  
 11. Freeze docs, then commit / push / PR / merge / cleanup (user auth; frozen decision docs in the feature PR; same plain-language + questions packet)
 

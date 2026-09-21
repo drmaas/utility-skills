@@ -1,6 +1,6 @@
 ---
 name: rpi
-description: Run a research-plan-implement workflow with review cycles and human gates after each agent review. Starts with a fit check (offer sdd/doit/plain implement if unfit), then PRD create-or-review, optional docs/contracts.md + tooling, ADRs under docs/adrs/, specialized reviewer agents, verify before each implementation review, and a final freeze that commits durable docs into the feature PR. Distinct from sdd (formal spec) and doit (no formal gate). Plan review sets TDD by default (Code first only with justification). Trigger on RPI, research-plan-implement, or a gated research → plan → implement loop.
+description: Run a research-plan-implement workflow with review cycles and targeted human gates. Starts with a fit check (offer sdd/doit/plain implement if unfit), then PRD create-or-review, optional docs/contracts.md + tooling, ADRs under docs/adrs/, specialized reviewer agents, verify before each implementation review, and a final freeze that commits durable docs into the feature PR. Implementation and per-phase review loops proceed automatically when agents can make a reasonable recommendation; escalate only unresolved material decisions. Distinct from sdd (formal spec) and doit (no formal gate). Plan review sets TDD by default (Code first only with justification). Trigger on RPI, research-plan-implement, or a gated research → plan → implement loop.
 compatibility: Requires Git with worktree support, the host repository's existing development tools, and the ability to spawn fresh-context subagents per phase.
 metadata:
   repository: https://github.com/drmaas/utility-skills
@@ -8,7 +8,7 @@ metadata:
 
 # Research, Plan, Implement, Review (RPI)
 
-A markdown-driven engineering workflow. Each phase is a fresh-context session that writes or reads artifacts under `docs/decisions/<feature>/` while active. After final review, freeze durable docs onto final paths, delete the decisions folder, and commit them on the feature branch as part of the feature PR — no dangling drafts for a later commit. After every agent review, a human review gate pauses so the user sees findings before continuing.
+A markdown-driven engineering workflow. Each phase is a fresh-context session that writes or reads artifacts under `docs/decisions/<feature>/` while active. After final review, freeze durable docs onto final paths, delete the decisions folder, and commit them on the feature branch as part of the feature PR — no dangling drafts for a later commit. Human gates remain on the pre-implementation decision phases and final review; implementation and per-phase review loops auto-proceed after agent self-revision unless an unresolved material decision needs the user's choice.
 
 Specialized reviewers live under [`agents/`](agents/README.md). Contracts: single host file `docs/contracts.md` ([`contracts.md`](contracts.md)). ADRs: [`adrs.md`](adrs.md).
 
@@ -25,7 +25,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 7. Plan review: architecture-security then QA-testability (agent + human gate); write ADRs; harden contracts; set implementation strategy.
 8. Implementation (per phase in `checklist.md`; default TDD from `plan.md`).
 9. Verify per phase — format, lint, typecheck, tests; fix mechanical failures.
-10. Implementation review per phase (adversarial-code-reviewer + human gate).
+10. Implementation review per phase (adversarial-code-reviewer; auto-proceed unless an unresolved material decision needs human input).
 11. Commit (asked, never auto).
 12. Final review (adversarial-code-reviewer + human gate).
 13. Refactor — only if user opts in.
@@ -48,7 +48,7 @@ All generated docs are brief, use simple language, stay to the point, and contai
 [Plan review: arch-sec then QA] --> ADRs, contracts, strategy --> human gate
     |
     v
-[Implement → Verify → Review → Commit] x N
+[Implement → Verify → Review → Commit] x N (review auto-proceeds unless escalation is required)
     |
     v
 [Final review] --> human gate
@@ -67,8 +67,8 @@ All generated docs are brief, use simple language, stay to the point, and contai
 - Before editing with multiple worktrees, verify `git rev-parse --show-toplevel`, the current branch, `git worktree list`, and repository status; use the confirmed root for absolute paths.
 - Every phase runs in a fresh-context subagent (no carry-over from prior phases). The user-visible summary is composed in the main thread, not the subagent.
 - Load the matching brief from `agents/` when spawning critic/review roles (see [`agents/README.md`](agents/README.md)).
-- Agent review always happens before the human review gate. The agent must self-revise first; the human only reads when obvious problems are already addressed.
-- Human gates are mandatory after PRD, research review, plan review, per-phase implementation review, and final review. See `human-gates.md`. Every gate (including commit and freeze) must include a plain-language explanation of what is changing in the application, and must surface any ambiguity as open questions with a recommended answer — never silent assumptions.
+- Agent review always happens before any human review gate. The agent must self-revise first. Implementation and per-phase review loops auto-proceed when findings can be resolved within approved scope using a reasonable recommendation; escalate only unresolved material decisions, and include the recommendation.
+- Human gates are mandatory after PRD, research review, plan review, and final review. Implementation review is normally automatic after agent self-revision; use the conditional intervention protocol in `human-gates.md` only when a material question cannot be resolved with a reasonable recommendation. Every actual gate (including commit and freeze) must include a plain-language explanation of what is changing in the application, and must surface any ambiguity as open questions with a recommended answer — never silent assumptions.
 - The skill never commits, pushes, opens a PR, or deletes files without explicit per-action user authorization — but freeze must complete (or user Abort) before the workflow claims done. Frozen docs must be committed on the feature branch and present in the feature PR; no dangling drafts and no docs-only follow-up PR by default.
 - Active drafts: `docs/decisions/<feature>/[prd|research|plan|checklist|refactor].md`. On freeze: `prd` → `docs/plans/<feature>-prd.md`, `research` → `docs/research/<feature>.md`, `plan` → `docs/plans/<feature>.md`, `refactor` → `docs/plans/<feature>-refactor.md`, optional `workflow` → `docs/workflows/<feature>-workflow.md`; delete `checklist.md`; remove the decisions folder. `docs/contracts.md` and `docs/adrs/*` stay on those paths and ship in the same PR.
 - `checklist.md` is the implementation tracker; the implementer updates it as work progresses.
@@ -114,7 +114,7 @@ A model report is not verification evidence.
 2. Run `phases/01-prd.md` (PRD ask → write/review → critic → gate → contracts ask). Derive `<feature>`; ask for base branch and model constraints (cost, retention, allowlist) if not yet recorded.
 3. Run `worktree.md` and enter a feature worktree. Refuse to proceed in the main checkout.
 4. Read `artifacts.md`, then `phases/01-research.md`.
-5. After every agent review, follow `human-gates.md`.
+5. After pre-implementation and final reviews, follow `human-gates.md`; during implementation reviews, use its conditional escalation protocol and auto-proceed when no unresolved material decision remains.
 6. At commit steps, follow `phases/08-commit.md`: never commit without asking.
 7. After final review (and optional refactor), run `phases/11-freeze.md`.
 

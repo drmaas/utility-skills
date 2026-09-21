@@ -27,9 +27,9 @@ The subagent must:
 - Do not start the next implementation phase.
 - Do not amend `plan.md` or `checklist.md`.
 
-## Human gate
+## Human intervention
 
-No human gate. Verify is mechanical; the implementation-review gate that follows it is where the user sees findings.
+No human intervention. Verify is mechanical; the implementation review that follows it auto-proceeds unless it finds an unresolved material decision.
 
 ## Exit conditions
 

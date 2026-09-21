@@ -2,15 +2,15 @@
 
 **Audience for gate packets:** `human` — plain language; no jargon dumps. Artifact files keep the audiences in [`artifacts.md`](artifacts.md).
 
-After every agent review phase, pause and surface (1) a **plain-language change explanation**, (2) a **phase content summary**, (3) the agent's review findings, and (4) any **open questions with recommendations**. The user decides only after the agent has self-revised.
+After approval-gated agent review phases, pause and surface (1) a **plain-language change explanation**, (2) a **phase content summary**, (3) the agent's review findings, and (4) any **open questions with recommendations**. The user decides only after the agent has self-revised. Implementation reviews are the exception: the agent applies reasonable recommendations and the workflow continues automatically unless a material question remains unresolved.
 
 ## Where the gates fire
 
 - After PRD review (`phases/01-prd.md`).
 - After research review (`phases/02-research-review.md`).
 - After plan review (`phases/04-plan-review.md`). Also surface implementation strategy from `plan.md`. User may override by editing `plan.md` before Approved, or Revise naming the strategy.
-- After each implementation review (`phases/07-implement-review.md`).
-- After final review (`phases/09-final-review.md`).
+- During each implementation review (`phases/07-implement-review.md`), only if a material question cannot be resolved with a reasonable recommendation.
+- After final review (`phases/09-final-review.md`) — always a human gate.
 - After refactor candidate write-up when opted in (`phases/10-refactor.md`).
 - Freeze + PR (`phases/11-freeze.md`) — different question set (commit / PR), still a mandatory stop.
 
@@ -92,7 +92,7 @@ Compose from `plan.md` + `checklist.md` (+ contracts/ADRs if touched):
 - ADRs written (paths).
 - Artifact paths.
 
-### Implementation-review gate (per checklist phase)
+### Implementation-review escalation packet (per checklist phase)
 
 Compose from implementer + verify summaries, checklist progress, and `git`:
 
@@ -125,7 +125,7 @@ Compose from `refactor.md`:
 
 5. By default, do not dump the full artifact or full diff. Detail on demand: [Diff on demand](#diff-on-demand).
 
-6. Call `question` with options:
+6. For an actual human gate or an implementation-review escalation, call `question` with options:
 
    - **Approved** — proceed (only when open questions are resolved or explicitly deferred by the user).
    - **Revise** — user notes; return to the same review subagent.
@@ -134,7 +134,7 @@ Compose from `refactor.md`:
 
    When open questions exist, prefer presenting them in the same `question` turn (or immediately before) so the user can pick recommendations or override them before choosing Approved.
 
-7. Record the reply in conversation state. Optional log: `docs/decisions/<feature>/workflow.md` only if the user wants one (frozen later).
+7. Record the reply in conversation state. For implementation-review escalation, return to the review loop after the user's decision; otherwise continue to the next phase. Optional log: `docs/decisions/<feature>/workflow.md` only if the user wants one (frozen later).
 
 ## Diff on demand
 
@@ -147,4 +147,4 @@ Never edit an artifact at a human gate. Edits go to the next subagent invocation
 
 ## Termination
 
-Review loops end only on **Approved**. Freeze ends only after commit/PR choices or Abort per `phases/11-freeze.md`. Do not auto-advance on agent “no issues found.”
+Approval-gated review loops end only on **Approved**. Implementation-review loops auto-advance after agent fixes and verification when no unresolved material decision remains; escalate with the same options only when needed. Freeze ends only after commit/PR choices or Abort per `phases/11-freeze.md`.

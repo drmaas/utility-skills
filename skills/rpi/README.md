@@ -1,6 +1,6 @@
 # rpi — Research, Plan, Implement
 
-Markdown-driven engineering workflow for coding agents. Separates research, planning, and implementation into fresh-context phases; writes short artifacts the human and agent share; runs an agent review before each human gate; ships durable docs in the feature PR at the end.
+Markdown-driven engineering workflow for coding agents. Separates research, planning, and implementation into fresh-context phases; writes short artifacts the human and agent share; uses targeted human gates and automatic implementation/review loops; ships durable docs in the feature PR at the end.
 
 **When to use:** mid-size feature work that needs research and a written plan before coding, with cheap human checkpoints after the agent has already self-revised. Each gate explains the app change in plain language and surfaces ambiguity as questions with recommendations.
 
@@ -24,14 +24,14 @@ Full orchestrator instructions: [`SKILL.md`](SKILL.md). Role-based model routing
 4. **Research** → write `research.md` → agent review → human gate.
 5. **Plan** → ask to run graphify in the worktree first (if installed and no graph yet) → write `plan.md` + `checklist.md` (and update `docs/contracts.md` if opted in).
 6. **Plan review** — Architecture-security then QA-testability; ADRs; set TDD vs Code first → human gate.
-7. **Per checklist phase:** implement → verify → adversarial code review → human gate → commit (asked, never auto).
+7. **Per checklist phase:** implement → verify → adversarial code review (auto-proceed unless an unresolved material decision needs human input) → commit (asked, never auto).
 8. **Final review** → human gate.
 9. **Refactor** — optional, only if you opt in.
 10. **Freeze** — Move durable docs to final paths, remove the decisions folder, commit into the feature PR.
 
 ```
 Fit → PRD → Worktree → Research ⇄ gate → Plan ⇄ gate
-  → (Implement → Verify → Review ⇄ gate → Commit) × N
+  → (Implement → Verify → Review [conditional intervention] → Commit) × N
   → Final review ⇄ gate → [Refactor?] → Freeze into PR
 ```
 

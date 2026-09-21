@@ -1,6 +1,6 @@
-# Phase 7 — Implementation review (agent + human)
+# Phase 7 — Implementation review (agent; conditional human intervention)
 
-Goal: adversarial-code-reviewer reviews the just-completed phase against `plan.md`, fixes what it can, then human gate.
+Goal: adversarial-code-reviewer reviews the just-completed phase against `plan.md`, fixes what it can, and the workflow continues automatically unless an unresolved material decision needs the user's choice.
 
 ## Subagent prompt
 
@@ -21,13 +21,16 @@ The subagent must:
 - Self-review once.
 - Return a numbered list: issues found, fixed, and unfixed.
 
-## Human gate
+## Conditional human intervention
 
-Follow `human-gates.md`. Print the **implementation** phase summary plus the agent's numbered list. By default, do not print the full diff. Options: Approved / Revise / Ignore points / Abort.
+Do not stop for a routine approval. After self-review, apply a reasonable recommendation for findings that are mechanical or within the approved behavior and rerun verification as needed. Continue automatically when the implementation matches the plan and no material decision remains unresolved.
+
+Escalate through `human-gates.md` only when the reviewer cannot safely choose among materially different behavior, scope, compatibility, security, or architecture outcomes. Include the preferred recommendation and alternatives. If the user chooses Revise or Ignore points, resume the review loop and verify again; Abort stops the workflow.
 
 ## Exit conditions
 
-- The user replied Approved.
+- Review findings were fixed, deferred within approved scope, or escalated and resolved.
 - The implementation matches the plan for the current phase.
+- Verification is green after any review fixes.
 
-Move to `phases/08-commit.md`.
+Move to `phases/08-commit.md` once these conditions hold.

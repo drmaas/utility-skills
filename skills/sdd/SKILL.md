@@ -25,7 +25,7 @@ Do not silently skip stages. If a stage is not applicable, record why in the wor
 - Use the project's package manager and existing scripts. Do not install a new dependency merely to satisfy this workflow without approval.
 - Treat untrusted values and unusual object behavior defensively, including inherited properties, accessors, proxies, cycles, sparse collections, malformed encodings, and mutable shared state when relevant.
 - Keep public diagnostics and serialized output deterministic and independent of third-party wording or incidental iteration order.
-- After implementation or review fixes, rerun the repository's canonical validation command; CI should run that same authoritative command rather than a weaker duplicate.
+- After implementation or review fixes, rerun the repository's canonical validation command; CI should run that same authoritative command rather than a weaker duplicate. Implementation and review stages should auto-proceed after agent self-revision when findings can be resolved with a reasonable recommendation; prompt the user only for an unresolved material decision or when an approved behavior/scope change requires the existing specification gate.
 - Before release operations, audit staged, unstaged, tracked, and untracked files for secrets, local settings, generated artifacts, unrelated changes, and accidental edits outside the worktree.
 - Keep state-inspection commands clearly scoped so branch, path, and status output cannot be confused; a failed or malformed tool call is a no-op, not a reason to guess.
 - Commit, push, PR creation, merge, and cleanup are separate release actions for audit purposes, but one explicit authorization for a clearly defined set remains valid for that set. Ask again only when authorization is absent, ambiguous, or the scope changes; never force-push or push directly to a protected default branch. Prompt immediately before deleting files/directories or removing worktrees.
@@ -260,7 +260,7 @@ Use a maximum of **three review rounds**:
    - Implementation defect within approved behavior → Implementation, then verification.
    - Verification or release-process gap → Verification, then review.
    - Documentation-only issue → Documentation after the fix.
-4. Re-run the canonical validation command and any affected tests after fixes, then start the next fresh review round.
+4. Re-run the canonical validation command and any affected tests after fixes, then start the next fresh review round. If findings are within the approved scope, apply the reasonable recommendation and continue without pausing for approval.
 5. Record the round number, reviewer context, findings, fixes, and evidence.
 
 Never exceed three rounds. If actionable disagreement or findings remain after round three, stop and ask the user to decide rather than continuing an unbounded loop.

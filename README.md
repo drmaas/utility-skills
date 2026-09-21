@@ -52,7 +52,7 @@ See [`skills/cleanup/README.md`](skills/cleanup/README.md).
 
 ### rpi
 
-Fit check → PRD → Research → Plan → Implement with specialized reviewer agents, optional `docs/contracts.md` + ADRs, mandatory human gates, and a final freeze that commits durable docs into the feature PR. Fresh-context subagents per phase; drafts under `docs/decisions/<feature>/`; TDD by default; verify before each implementation review.
+Fit check → PRD → Research → Plan → Implement with specialized reviewer agents, optional `docs/contracts.md` + ADRs, targeted human gates, and a final freeze that commits durable docs into the feature PR. Fresh-context subagents per phase; implementation/review loops auto-proceed on reasonable in-scope fixes and escalate only unresolved material decisions; drafts under `docs/decisions/<feature>/`; TDD by default; verify before each implementation review.
 
 ```bash
 npx skills add drmaas/utility-skills --skill rpi

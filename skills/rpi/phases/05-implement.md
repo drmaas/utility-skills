@@ -27,9 +27,9 @@ The subagent must:
 - The implementer may not start the next phase, even if it has time.
 - The implementer may not amend `plan.md` or `checklist.md` beyond checking off its own tasks.
 
-## Human gate
+## Human intervention
 
-No human gate in the implementer step. The gate is in phase 6 (implementation review).
+No human intervention in the implementer step. Phase 7 review proceeds automatically when findings can be resolved with a reasonable recommendation; it escalates only unresolved material decisions.
 
 ## Exit conditions
 

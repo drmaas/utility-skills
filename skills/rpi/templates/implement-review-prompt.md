@@ -23,8 +23,8 @@ Load and follow `agents/adversarial-code-reviewer.md`.
 2. Run `git diff <base-branch>..HEAD -- <files touched in the current phase>` (or `--stat` if unknown).
 3. Run the repository's canonical validation command.
 4. Review for bugs, missing tests, scope creep, secrets, strategy mismatches, contract/ADR drift.
-5. Fix in place. Update checklist if work was falsely marked done.
-6. Amend contracts/ADRs only when the interface or decision actually changed.
+5. Fix in place. Update checklist if work was falsely marked done. Apply a reasonable recommendation for mechanical issues and findings within approved behavior; do not pause for routine approval.
+6. Amend contracts/ADRs only when the interface or decision actually changed. Report an unresolved material choice explicitly with the preferred recommendation and alternatives.
 7. Keep doc edits brief.
 8. Self-review once.
 9. Return numbered list: found, fixed, unfixed.

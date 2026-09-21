@@ -37,7 +37,7 @@ Do not silently skip stages. If a stage is not applicable, record why. Keep a sh
 - Record stage status, verification commands, review rounds, findings, and fixes.
 - Treat untrusted values and unusual object behavior defensively, including inherited properties, accessors, proxies, cycles, sparse collections, malformed encodings, and mutable shared state when relevant.
 - Keep public diagnostics and serialized output deterministic and independent of third-party wording or incidental iteration order.
-- After implementation or review fixes, rerun the repository's canonical validation command; CI should run that same authoritative command rather than a weaker duplicate.
+- After implementation or review fixes, rerun the repository's canonical validation command; CI should run that same authoritative command rather than a weaker duplicate. Implementation and review stages should auto-proceed after agent self-revision when findings can be resolved with a reasonable recommendation; prompt the user only for an unresolved material decision or when the change must escalate to `sdd`.
 - Before release operations, audit staged, unstaged, tracked, and untracked files for secrets, local settings, generated artifacts, unrelated changes, and accidental edits outside the worktree.
 - Keep state-inspection commands clearly scoped so branch, path, and status output cannot be confused; a failed or malformed tool call is a no-op, not a reason to guess.
 - Commit, push, PR creation, merge, and cleanup are separate release actions for audit purposes, but one explicit authorization for a clearly defined set remains valid for that set. Ask again only when authorization is absent, ambiguous, or the scope changes; never force-push or push directly to a protected default branch. Prompt immediately before deleting files/directories or removing worktrees.
@@ -191,7 +191,7 @@ Have the tests-and-coding model (role `coding`) implement the smallest coherent 
 - Validate untrusted input at the correct boundary and return stable, actionable errors.
 - Keep public names, schemas, migrations, generated files, and adapters synchronized.
 - Avoid speculative abstractions and unrelated cleanup.
-- If implementation exposes a new behavior decision, pause and ask the user rather than silently expanding scope.
+- If implementation exposes a material behavior decision that cannot be resolved with a reasonable recommendation within the understood request, pause and ask the user rather than silently expanding scope; otherwise apply the recommendation and continue.
 - Update tests only for behavior that is within the already understood request; if behavior changes materially, switch to `sdd` or return to brainstorming.
 
 ## Stage 5 — Verification and tests
@@ -216,13 +216,13 @@ Use a maximum of **three review rounds**:
 1. Round 1 is mandatory. Request findings ordered by severity: missing behavior, incorrect assumptions, security/privacy issues, regressions, test gaps, maintainability concerns, and documentation gaps.
 2. If round 1 has no actionable findings, mark the review passed and continue.
 3. Rounds 2 and 3 run only when round 1 produced findings. Route each finding to the earliest appropriate stage:
-   - Unclear or changed behavior → Brainstorm and scope; ask the user if a decision is required.
+   - Unclear or changed behavior → Brainstorm and scope; apply a reasonable recommendation and continue when safe, otherwise ask the user if a material decision is required.
    - Architecture, boundary, migration, or API issue → Architecture note and plan, then implementation and verification.
    - Missing or weak coverage → Tests first, then implementation and verification.
    - Implementation defect within the understood scope → Implementation, then verification.
    - Verification or release-process gap → Verification, then review.
    - Documentation-only issue → Documentation after the fix.
-4. Re-run the canonical validation command and any affected tests after fixes, then start the next fresh review round.
+4. Re-run the canonical validation command and any affected tests after fixes, then start the next fresh review round. If findings remain within the understood scope, apply the reasonable recommendation and continue without pausing for approval.
 5. Record the round number, reviewer context, findings, fixes, and evidence.
 
 Never exceed three rounds. If actionable disagreement or findings remain after round three, stop and ask the user to decide rather than continuing an unbounded loop.
