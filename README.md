@@ -30,6 +30,16 @@ After installation, your agent will automatically load the relevant skill when i
 
 ## Skills
 
+### openrouter-balance
+
+Check the OpenRouter account credit balance (total credits, used, remaining) via the credits API. Python 3 stdlib only; reads the API key from `OPENROUTER_API_KEY` env var or `~/.hermes/.env` — the key itself is never stored in this repo.
+
+```bash
+npx skills add drmaas/utility-skills --skill openrouter-balance
+```
+
+See [`skills/openrouter-balance/SKILL.md`](skills/openrouter-balance/SKILL.md).
+
 ### clear-markdown
 
 Write Markdown in clear language with short sentences and logical structure. Choose audience mode `human`, `agent`, or `hybrid` (default for `SKILL.md` / `AGENTS.md` / most repo docs).
