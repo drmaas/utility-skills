@@ -7,7 +7,7 @@ Check the OpenRouter account credit balance: total credits, used, and remaining.
 - Python 3 (stdlib only — no extra packages)
 - An OpenRouter API key (`sk-or-v1-...`) in one of:
   - `OPENROUTER_API_KEY` environment variable
-  - `~/.hermes/.env`
+  - a `.env` file containing `OPENROUTER_API_KEY=...`
 
 ## Usage
 
@@ -30,7 +30,7 @@ Options:
 
 ## Error handling
 
-Exits with `No OpenRouter API key found` if no key is available. Set `OPENROUTER_API_KEY` or add the key to `~/.hermes/.env`.
+Exits with `No OpenRouter API key found` if no key is available. Set `OPENROUTER_API_KEY` or add the key to a `.env` file in your home directory.
 
 ## Install
 

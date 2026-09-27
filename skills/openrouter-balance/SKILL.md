@@ -13,7 +13,7 @@ metadata:
 - Python 3 (stdlib only)
 - An OpenRouter API key (`sk-or-v1-...`) in one of:
   - `OPENROUTER_API_KEY` environment variable
-  - `~/.hermes/.env`
+  - a `.env` file containing `OPENROUTER_API_KEY=...`
 
 ## Usage
 
@@ -23,7 +23,7 @@ Run the script:
 python3 scripts/check_balance.py
 ```
 
-Reads the API key from `OPENROUTER_API_KEY` env var or `~/.hermes/.env` (contains a `sk-or-v1-...` key). Output: total credits, used, remaining.
+Reads the API key from `OPENROUTER_API_KEY` env var, or found in a `.env` file in the home directory (a `sk-or-v1-...` key). Output: total credits, used, remaining.
 
 - `--json` for the raw API response
 - `--key <key>` to override the key source
@@ -36,5 +36,5 @@ Reads the API key from `OPENROUTER_API_KEY` env var or `~/.hermes/.env` (contain
 
 ## Edge Cases
 
-- Missing key → the script exits with `No OpenRouter API key found`; do not retry, tell the user to set `OPENROUTER_API_KEY` or add the key to `~/.hermes/.env`.
+- Missing key → the script exits with `No OpenRouter API key found`; do not retry, tell the user to set `OPENROUTER_API_KEY` or add the key to a `.env` file in your home directory.
 - Never log, echo, or commit the API key itself — the script never prints it.

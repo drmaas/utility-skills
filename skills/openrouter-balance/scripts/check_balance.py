@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Check OpenRouter account credit balance.
 
-Reads the API key from ~/.hermes/.env (OPENROUTER_API_KEY) unless given
-via OPENROUTER_API_KEY env var or --key.
+Reads the API key from OPENROUTER_API_KEY unless given
+via env var, --key, or found in a .env file in the home directory.
 """
 import argparse
 import json
@@ -11,7 +11,7 @@ import re
 import sys
 import urllib.request
 
-ENV_PATH = os.path.expanduser("~/.hermes/.env")
+ENV_PATHS = [os.path.expanduser("~/.env")]
 
 
 def get_key(cli_key=None):
@@ -20,12 +20,12 @@ def get_key(cli_key=None):
     key = os.environ.get("OPENROUTER_API_KEY")
     if key:
         return key.strip()
-    if os.path.exists(ENV_PATH):
-        text = open(ENV_PATH).read()
-        m = re.search(r"sk-or-v1-[A-Za-z0-9\-]+", text)
-        if m:
-            return m.group(0)
-    sys.exit("No OpenRouter API key found (env var, --key, or ~/.hermes/.env)")
+    for path in ENV_PATHS:
+        if os.path.exists(path):
+            m = re.search(r"sk-or-v1-[A-Za-z0-9\-]+", open(path).read())
+            if m:
+                return m.group(0)
+    sys.exit("No OpenRouter API key found (env var, --key, or a .env file)")
 
 
 def main():
