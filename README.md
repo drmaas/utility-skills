@@ -16,6 +16,7 @@ npx skills add drmaas/utility-skills --skill sdd
 npx skills add drmaas/utility-skills --skill doit
 npx skills add drmaas/utility-skills --skill clear-markdown
 npx skills add drmaas/utility-skills --skill cleanup
+npx skills add drmaas/utility-skills --skill meeting-recap
 
 # Install to a specific agent (see `npx skills add --help` for supported hosts)
 npx skills add drmaas/utility-skills --agent <agent>
@@ -59,6 +60,18 @@ npx skills add drmaas/utility-skills --skill cleanup
 ```
 
 See [`skills/cleanup/README.md`](skills/cleanup/README.md).
+
+### meeting-recap
+
+Turn a meeting transcript into a trustworthy recap: TL;DR, decisions, single-owner action items with dates resolved by real calendar computation, discussion by topic, risks, and open questions. Every claim traces to a timestamp. Three depths (`quick`, `standard`, `deep`) and three audiences (`team`, `exec`, `client`).
+
+```bash
+npx skills add drmaas/utility-skills --skill meeting-recap
+```
+
+Trigger phrases: "meeting notes", "minutes", "debrief", "wrap-up", "retro notes", "what did we decide".
+
+See [`skills/meeting-recap/README.md`](skills/meeting-recap/README.md).
 
 ### rpi
 
@@ -151,6 +164,9 @@ skills/
     SKILL.md
     README.md
   cleanup/
+    SKILL.md
+    README.md
+  meeting-recap/
     SKILL.md
     README.md
 ```
