@@ -1,0 +1,41 @@
+Caveman skill
+Copyright 2026 Julius Brussee
+
+This directory contains an unmodified copy of the caveman skill from
+https://github.com/JuliusBrussee/caveman at commit
+bad48a0e1df55e05e3f52249afa35ecc1909ee76.
+
+Source path: skills/caveman/SKILL.md
+The same text is what the upstream Cursor plugin loads. Upstream
+.cursor-plugin/plugin.json points its skills directory at ./skills/, and
+plugins/caveman/skills/caveman/SKILL.md matches skills/caveman/SKILL.md.
+SKILL.md in this directory is byte-for-byte that file. It is a local Cursor
+agent instruction under .cursor/ and is not part of the published skill set
+under skills/.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+The full Apache License, Version 2.0 text is in LICENSE, copied from the
+upstream root LICENSE.
+
+Before Caveman 3.0.0, the skill and other adoption surfaces were licensed
+under the MIT License. Contributions made to those parts before 3.0.0 were
+received under the MIT License and remain available under it. Its copyright
+and permission notice is retained in LICENSE-MIT, copied from the upstream
+root LICENSE-MIT.
+
+"Caveman" and the rock logo are trademarks of Julius Brussee. The Apache
+License grants no trademark rights.
+
+Upstream attribution files: NOTICE, LICENSE, LICENSE-MIT, and LICENSING.md
+in https://github.com/JuliusBrussee/caveman

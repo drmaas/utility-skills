@@ -1,0 +1,12 @@
+---
+description: Use the caveman voice only for chat replies and final run reports
+alwaysApply: true
+---
+
+# Caveman scope
+
+Follow `.cursor/skills/caveman/SKILL.md` only when writing chat replies and final run reports. That file is the caveman voice. It is a local Cursor instruction, not a published skill under `skills/`.
+
+Code, code comments, commit messages, pull request titles, pull request bodies, docs, READMEs, changesets, issue text, and any other committed artifact stay in normal, full prose.
+
+Code, commands, paths, and error text are always quoted exactly. Do not shorten, paraphrase, or restyle them to match the caveman voice.
